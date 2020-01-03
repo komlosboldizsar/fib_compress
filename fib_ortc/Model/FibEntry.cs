@@ -36,5 +36,31 @@ namespace fib_ortc.Model
 
         private int PrefixLength => binaryForm.Length;
 
+        private string nextHop = "";
+
+        public string NextHop
+        {
+            get => nextHop;
+            set
+            {
+                if (value == nextHop)
+                    return;
+                nextHop = value;
+                PropertyChanged?.Invoke(nameof(NextHop));
+            }
+        }
+
+        public FibEntry(string binaryForm, string nextHop)
+        {
+            BinaryForm = binaryForm;
+            NextHop = nextHop;
+        }
+
+        public FibEntry(string ipForm, string nextHop, object _ipFormUnused)
+        {
+            IpForm = ipForm;
+            NextHop = nextHop;
+        }
+
     }
 }
