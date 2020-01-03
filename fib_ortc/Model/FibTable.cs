@@ -39,7 +39,25 @@ namespace fib_ortc.Model
 
         public void CreateFromFibTree(FibTree tree)
         {
-            throw new NotImplementedException();
+            entries.Clear();
+            addTreeNodeAndChildren(tree.Root);
+            CollectionChanged?.Invoke();
+        }
+
+        private void addTreeNodeAndChildren(FibTreeNode node, string binaryPath = "")
+        {
+
+            if (node.Label != null)
+            {
+                FibEntry newEntry = new FibEntry(binaryPath, node.Label.NextHop);
+                entries.Add(newEntry);
+            }
+
+            if (node.Child0 != null)
+                addTreeNodeAndChildren(node.Child0, binaryPath + "0");
+            if (node.Child1 != null)
+                addTreeNodeAndChildren(node.Child1, binaryPath + "1");
+
         }
 
     }

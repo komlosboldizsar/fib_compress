@@ -56,7 +56,40 @@ namespace fib_ortc.Model
 
         public void CreateFromFibTreeByOrtc(FibTree tree)
         {
-            throw new NotImplementedException();
+
+            // TODO: this just copies the tree
+            Root = new FibTreeNode();
+            Labels.Clear();
+
+            copyNodeAndChildrens(Root, tree.Root);
+
+            TreeChanged?.Invoke();
+
+        }
+
+        private void copyNodeAndChildrens(FibTreeNode to, FibTreeNode from)
+        {
+
+            if (from.Child0 != null)
+            {
+                to.Child0 = new FibTreeNode();
+                copyNodeAndChildrens(to.Child0, from.Child0);
+            }
+
+            if (from.Child1 != null)
+            {
+                to.Child1 = new FibTreeNode();
+                copyNodeAndChildrens(to.Child1, from.Child1);
+            }
+
+            if (from.Label != null)
+            {
+                FibTreeLabel label = Labels.GetLabelByNextHop(from.Label.NextHop);
+                if (label == null)
+                    label = Labels.AddLabelForNextHop(from.Label.NextHop);
+                to.Label = label;
+            }
+
         }
 
         public delegate void TreeChangedDelegate();
