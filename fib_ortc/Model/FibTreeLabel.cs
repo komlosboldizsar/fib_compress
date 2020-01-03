@@ -38,6 +38,12 @@ namespace fib_ortc.Model
             }
         }
 
+        public FibTreeLabel(string text, string nextHop)
+        {
+            this.text = text;
+            this.nextHop = nextHop;
+        }
+
     }
 
 }

@@ -16,7 +16,42 @@ namespace fib_ortc.Model
 
         public void CreateFromFibTable(FibTable table)
         {
-            throw new NotImplementedException();
+
+            Root = new FibTreeNode(null, null);
+            Labels.Clear();
+
+            foreach (FibEntry entry in table)
+            {
+
+                FibTreeNode node = Root;
+                for (int i = 0; i < entry.BinaryForm.Length; i++)
+                {
+
+                    if (entry.BinaryForm[i] == '0')
+                    {
+                        if (node.Child0 == null)
+                            node.Child0 = new FibTreeNode();
+                        node = node.Child0;
+                    }
+
+                    if (entry.BinaryForm[i] == '1')
+                    {
+                        if (node.Child1 == null)
+                            node.Child1 = new FibTreeNode();
+                        node = node.Child1;
+                    }
+
+                }
+
+                FibTreeLabel label = Labels.GetLabelByNextHop(entry.NextHop);
+                if (label == null)
+                    label = Labels.AddLabelForNextHop(entry.NextHop);
+                node.Label = label;
+
+            }
+
+            TreeChanged?.Invoke();
+
         }
 
         public void CreateFromFibTreeByOrtc(FibTree tree)
@@ -44,14 +79,15 @@ namespace fib_ortc.Model
                 return labels.FirstOrDefault(l => (l.NextHop == nextHop));
             }
 
-            public void AddLabel(FibTreeLabel label)
+            public FibTreeLabel AddLabelForNextHop(string nextHop)
             {
-                if (GetLabelByText(label.Text) != null)
+                if (GetLabelByNextHop(nextHop) != null)
                     throw new Exception();
-                if (GetLabelByNextHop(label.NextHop) != null)
-                    throw new Exception();
-                labels.Add(label);
+                string newLabelText = ((char)((int)'a' + labels.Count)).ToString();
+                FibTreeLabel newLabel = new FibTreeLabel(newLabelText, nextHop);
+                labels.Add(newLabel);
                 CollectionChanged?.Invoke();
+                return newLabel;
             }
 
             public void Clear()
