@@ -16,7 +16,7 @@ namespace fib_ortc.Model
                 throw new Exception();
 
             string[] octets = parts[0].Split('.');
-            if (parts.Length != 4)
+            if (octets.Length != 4)
                 throw new Exception();
 
             if (!int.TryParse(parts[1], out int prefixLength))
@@ -26,11 +26,11 @@ namespace fib_ortc.Model
                 throw new Exception();
 
             string binaryForm = "";
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
                 if (!int.TryParse(octets[i], out int octetInt))
                     throw new Exception();
-                if ((octetInt < 0) || (octetInt > 32))
+                if ((octetInt < 0) || (octetInt > 255))
                     throw new Exception();
                 binaryForm = binaryForm + Convert.ToString(octetInt, 2).PadLeft(8, '0');
             }
@@ -45,7 +45,7 @@ namespace fib_ortc.Model
                 throw new Exception();
             string binaryForm32Length = binaryForm.PadRight(32, '0');
             string[] octets = new string[4];
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
                 octets[i] = Convert.ToInt32(binaryForm32Length.Substring(i * 8, 8), 2).ToString();
             return string.Format("{0}/{1}", string.Join(".", octets), binaryForm.Length);
         }
