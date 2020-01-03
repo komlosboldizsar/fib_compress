@@ -46,10 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Gui\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Gui\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\GeneralComponents\Tables\CustomDataGridView.cs">
@@ -63,6 +63,12 @@
     <Compile Include="Gui\GeneralComponents\Tables\DataGridViewDisableButtonCell.cs" />
     <Compile Include="Gui\GeneralComponents\Tables\DataGridViewImageButtonCell.cs" />
     <Compile Include="Gui\GeneralComponents\Tables\DataGridViewSmallIconCell.cs" />
+    <Compile Include="Gui\AddFibEntryDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gui\AddFibEntryDialog.Designer.cs">
+      <DependentUpon>AddFibEntryDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\FibEntry.cs" />
     <Compile Include="Model\FibTable.cs" />
     <Compile Include="Model\FibTree.cs" />
@@ -74,8 +80,11 @@
     <Compile Include="Model\PrefixConverter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Gui\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\AddFibEntryDialog.resx">
+      <DependentUpon>AddFibEntryDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

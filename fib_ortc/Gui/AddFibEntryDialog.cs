@@ -8,13 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace fib_ortc
+namespace fib_ortc.Gui
 {
-    public partial class MainForm : Form
+    public partial class AddFibEntryDialog : Form
     {
-        public MainForm()
+        public AddFibEntryDialog()
         {
             InitializeComponent();
         }
+
+        public string Prefix => prefixTextBox.Text;
+
+        public string NextHop => nextHopTextBox.Text;
+
     }
 }
