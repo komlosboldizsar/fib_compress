@@ -82,7 +82,7 @@ namespace fib_ortc.Model
             public FibTreeLabel AddLabelForNextHop(string nextHop)
             {
                 if (GetLabelByNextHop(nextHop) != null)
-                    throw new Exception();
+                    throw new Exception("This next hop is already in the table and has a label.");
                 string newLabelText = ((char)((int)'a' + labels.Count)).ToString();
                 FibTreeLabel newLabel = new FibTreeLabel(newLabelText, nextHop);
                 labels.Add(newLabel);

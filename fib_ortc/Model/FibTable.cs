@@ -16,7 +16,7 @@ namespace fib_ortc.Model
         public void AddEntry(FibEntry entry)
         {
             if (entries.FirstOrDefault(e => (e.BinaryForm == entry.BinaryForm)) != null)
-                throw new Exception();
+                throw new Exception("This prefix is already in the FIB table.");
             entries.Add(entry);
             CollectionChanged?.Invoke();
         }
