@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace fib_ortc.Model
@@ -46,7 +47,7 @@ namespace fib_ortc.Model
             string[] octets = new string[4];
             for (int i = 0; i < 3; i++)
                 octets[i] = Convert.ToInt32(binaryForm32Length.Substring(i * 8, 8), 2).ToString();
-            return string.Format("{0}/{1}", string.Join('.', octets), binaryForm.Length);
+            return string.Format("{0}/{1}", string.Join(".", octets), binaryForm.Length);
         }
 
         public static bool IsValidBinaryForm(string prefix)

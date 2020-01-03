@@ -16,6 +16,5 @@ namespace fib_ortc
         {
             InitializeComponent();
         }
-
     }
 }
