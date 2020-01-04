@@ -1,6 +1,7 @@
 ﻿using fib_compress.Gui.GeneralComponents.Tables;
 using fib_compress.Model;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -25,6 +26,7 @@ namespace fib_compress.Gui
         private FibTree mFibTreeOriginal;
         private FibTree mFibTreeNormalized;
         private FibTree mFibTreeCompressed;
+        private LookupStatisticsCollection mLookupStatisticsCollection;
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -42,6 +44,7 @@ namespace fib_compress.Gui
             mFibTreeOriginal = new FibTree();
             mFibTreeNormalized = new FibTree();
             mFibTreeCompressed = new FibTree();
+            mLookupStatisticsCollection = new LookupStatisticsCollection();
             mFibTableOriginal.CollectionChanged += MFibTableOriginal_CollectionChanged;
             mFibTreeOriginal.TreeChanged += MFibTreeOriginal_TreeChanged;
             mFibTreeNormalized.TreeChanged += MFibTreeNormalized_TreeChanged;
@@ -85,6 +88,7 @@ namespace fib_compress.Gui
         private CustomDataGridView<FibTreeLabel> _originalNextHopTable;
         private CustomDataGridView<FibTreeLabel> _normalizedNextHopTable;
         private CustomDataGridView<FibTreeLabel> _compressedNextHopTable;
+        private CustomDataGridView<LookupStatistics> _ipLookupStatisticsTable;
 
         protected DataGridViewCellStyle BOLD_TEXT_CELL_STYLE
         {
@@ -185,6 +189,58 @@ namespace fib_compress.Gui
 
         }
 
+        private void initIpLookupStatisticsTable()
+        {
+
+            _ipLookupStatisticsTable = CreateTable<LookupStatistics>(ref ipLookupStatisticsTable, ipLookupStatisticsTableContainer);
+
+            CustomDataGridViewColumnDescriptorBuilder<LookupStatistics> builder;
+
+            // Column: prefix, IP format
+            builder = new CustomDataGridViewColumnDescriptorBuilder<LookupStatistics>(_ipLookupStatisticsTable);
+            builder.Type(DataGridViewColumnType.TextBox);
+            builder.Header("IP");
+            builder.Width(120);
+            builder.UpdaterMethod((entry, cell) => { cell.Value = entry.IP; });
+            builder.BuildAndAdd();
+
+            // Column: next hop
+            builder = new CustomDataGridViewColumnDescriptorBuilder<LookupStatistics>(_ipLookupStatisticsTable);
+            builder.Type(DataGridViewColumnType.TextBox);
+            builder.Header("Next hop");
+            builder.Width(120);
+            builder.UpdaterMethod((entry, cell) => { cell.Value = entry.NextHop ?? "-"; });
+            builder.BuildAndAdd();
+
+            // Column: edges (original)
+            builder = new CustomDataGridViewColumnDescriptorBuilder<LookupStatistics>(_ipLookupStatisticsTable);
+            builder.Type(DataGridViewColumnType.TextBox);
+            builder.Header("Edges (original)");
+            builder.Width(120);
+            builder.UpdaterMethod((entry, cell) => { cell.Value = entry.EdgesOriginal?.ToString() ?? "-"; });
+            builder.BuildAndAdd();
+
+            // Column: edges (normalized)
+            builder = new CustomDataGridViewColumnDescriptorBuilder<LookupStatistics>(_ipLookupStatisticsTable);
+            builder.Type(DataGridViewColumnType.TextBox);
+            builder.Header("Edges (normalized)");
+            builder.Width(120);
+            builder.UpdaterMethod((entry, cell) => { cell.Value = entry.EdgesNormalized?.ToString() ?? "-"; });
+            builder.BuildAndAdd();
+
+            // Column: edges (original)
+            builder = new CustomDataGridViewColumnDescriptorBuilder<LookupStatistics>(_ipLookupStatisticsTable);
+            builder.Type(DataGridViewColumnType.TextBox);
+            builder.Header("Edges (compressed)");
+            builder.Width(120);
+            builder.UpdaterMethod((entry, cell) => { cell.Value = entry.EdgesCompressed?.ToString() ?? "-"; });
+            builder.BuildAndAdd();
+
+            // Bind database
+            _ipLookupStatisticsTable.BoundCollection = mLookupStatisticsCollection;
+
+        }
+
         public CustomDataGridView<T> CreateTable<T>(ref DataGridView insteadOf, Panel conainer)
             where T : class
         {
@@ -263,5 +319,74 @@ namespace fib_compress.Gui
             }
         }
 
+        private void doLookupButton_Click(object sender, EventArgs e)
+        {
+            DoLookupDialog dialog = new DoLookupDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string ip = dialog.IP;
+                string nextHop = "?";
+                int? edgesOriginal = 999;
+                int? edgesNormalized = 999;
+                int? edgesCompressed = 999;
+                // TODO: Do lookup
+                LookupStatistics statEntry = new LookupStatistics(ip, nextHop, edgesOriginal, edgesNormalized, edgesCompressed);
+                mLookupStatisticsCollection.Add(statEntry);
+            }
+        }
+
+        private void clearIpLookupTableButton_Click(object sender, EventArgs e)
+        {
+            mLookupStatisticsCollection.Clear();
+        }
+
+        private class LookupStatistics
+        {
+
+            public string IP { get; private set; }
+            public string NextHop { get; private set; }
+            public int? EdgesOriginal { get; private set; }
+            public int? EdgesNormalized { get; private set; }
+            public int? EdgesCompressed { get; private set; }
+
+            public LookupStatistics(string ip, string nextHop, int? edgesOriginal, int? edgesNormalized, int? edgesCompressed)
+            {
+                IP = ip;
+                NextHop = nextHop;
+                EdgesOriginal = edgesOriginal;
+                EdgesNormalized = edgesNormalized;
+                EdgesCompressed = edgesCompressed;
+            }
+
+        }
+
+        private class LookupStatisticsCollection : IObservableCollection<LookupStatistics>
+        {
+
+            public event CollectionChangedDelegate CollectionChanged;
+
+            private List<LookupStatistics> collection = new List<LookupStatistics>();
+
+            public void Add(LookupStatistics entry)
+            {
+                collection.Add(entry);
+                CollectionChanged?.Invoke();
+            }
+
+            public void Clear()
+            {
+                collection.Clear();
+                CollectionChanged?.Invoke();
+            }
+
+            public IEnumerator<LookupStatistics> GetEnumerator()
+                => collection.GetEnumerator();
+
+            IEnumerator IEnumerable.GetEnumerator()
+                => collection.GetEnumerator();
+
+        }
+
+        
     }
 }
