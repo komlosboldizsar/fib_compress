@@ -341,13 +341,24 @@ namespace fib_compress.Gui
         private void visualizeLookup(FibTree.Lookup lookup, TreeNodeCollection treeviewNodeCollection)
         {
             foreach (TreeNode node in treeviewNodeCollection) {
+
                 visualizeLookup(lookup, node.Nodes);
+
                 if (lookup == null)
                 {
                     node.BackColor = Color.White;
                     return;
                 }
-                node.BackColor = lookup.Nodes.Contains(node.Tag) ? Color.LightGreen : Color.White;
+
+                if (!lookup.Nodes.Contains(node.Tag))
+                    node.BackColor = Color.White;
+                else if (lookup.SolutionNode == node.Tag)
+                    node.BackColor = Color.LightGreen;
+                else if (((FibTreeNode)node.Tag).Label != null)
+                    node.BackColor = Color.LightPink;
+                else
+                    node.BackColor = Color.LightGray;
+
             }
         }
 

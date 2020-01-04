@@ -270,6 +270,7 @@ namespace fib_compress.Model
             private FibTree tree;
             private string ip;
             public FibTreeLabel NextHop { get; private set; }
+            public FibTreeNode SolutionNode { get; private set; }
             public List<FibTreeNode> Nodes { get; private set; } = new List<FibTreeNode>();
             public int? EdgeCount => (NextHop != null) ? (int?)(Nodes.Count - 1) : null;
 
@@ -278,6 +279,7 @@ namespace fib_compress.Model
                 this.tree = tree;
                 this.ip = ip;
                 NextHop = null;
+                SolutionNode = null;
                 _lookup(tree.Root, IpConverter.IpToBinary(ip));
             }
 
@@ -285,7 +287,10 @@ namespace fib_compress.Model
             {
                 Nodes.Add(node);
                 if (node.Label != null)
+                {
                     NextHop = node.Label;
+                    SolutionNode = node;
+                }
                 string examinedBits = ipBits.Substring(0, node.EdgeLabelLength ?? 0);
                 string remainderBits = ipBits.Substring(node.EdgeLabelLength ?? 0);
                 foreach (KeyValuePair<string, FibTreeNode> childEntry in node.Children)
