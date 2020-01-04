@@ -84,6 +84,7 @@
     <Compile Include="Model\INotifyCollectionChanged.cs" />
     <Compile Include="Model\INotifyPropertyChanged.cs" />
     <Compile Include="Model\IObservableCollection.cs" />
+    <Compile Include="Model\IpConverter.cs" />
     <Compile Include="Model\PrefixConverter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

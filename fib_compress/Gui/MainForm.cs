@@ -80,6 +80,7 @@ namespace fib_compress.Gui
             initNextHopTable(ref originalNextHopTable, ref _originalNextHopTable, originalNextHopTableContainer, mFibTreeOriginal);
             initNextHopTable(ref normalizedNextHopTable, ref _normalizedNextHopTable, normalizedNextHopTableContainer, mFibTreeNormalized);
             initNextHopTable(ref compressedNextHopTable, ref _compressedNextHopTable, compressedNextHopTableContainer, mFibTreeCompressed);
+            initIpLookupStatisticsTable();
         }
 
         private CustomDataGridView<FibEntry> _originalFibTable;
@@ -324,14 +325,19 @@ namespace fib_compress.Gui
             DoLookupDialog dialog = new DoLookupDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                string ip = dialog.IP;
-                string nextHop = "?";
-                int? edgesOriginal = 999;
-                int? edgesNormalized = 999;
-                int? edgesCompressed = 999;
-                // TODO: Do lookup
-                LookupStatistics statEntry = new LookupStatistics(ip, nextHop, edgesOriginal, edgesNormalized, edgesCompressed);
-                mLookupStatisticsCollection.Add(statEntry);
+                try
+                {
+                    string ip = dialog.IP;
+                    FibTree.Lookup lookupOriginal = mFibTreeOriginal.DoLookup(ip);
+                    FibTree.Lookup lookupNormalized = mFibTreeNormalized.DoLookup(ip);
+                    FibTree.Lookup lookupCompressed = mFibTreeCompressed.DoLookup(ip);
+                    LookupStatistics statEntry = new LookupStatistics(ip, lookupOriginal.NextHop?.NextHop, lookupOriginal.EdgeCount, lookupNormalized.EdgeCount, lookupCompressed.EdgeCount);
+                    mLookupStatisticsCollection.Add(statEntry);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Lookup error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 

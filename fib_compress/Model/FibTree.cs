@@ -14,6 +14,9 @@ namespace fib_compress.Model
 
         public LabelCollection Labels { get; private set; } = new LabelCollection();
 
+        public int NodeCount => Root?.NodeCount ?? 0;
+        public int EdgeCount => Root?.EdgeCount ?? 0;
+
         public void CreateFromFibTable(FibTable table)
         {
 
@@ -255,6 +258,40 @@ namespace fib_compress.Model
 
             IEnumerator IEnumerable.GetEnumerator()
                 => labels.GetEnumerator();
+
+        }
+
+        public Lookup DoLookup(string ip)
+            => new Lookup(this, ip);
+
+        public class Lookup
+        {
+
+            private FibTree tree;
+            private string ip;
+            public FibTreeLabel NextHop { get; private set; }
+            public List<FibTreeNode> Nodes { get; private set; } = new List<FibTreeNode>();
+            public int EdgeCount => Nodes.Count - 1;
+
+            public Lookup(FibTree tree, string ip)
+            {
+                this.tree = tree;
+                this.ip = ip;
+                NextHop = null;
+                _lookup(tree.Root, IpConverter.IpToBinary(ip));
+            }
+
+            private void _lookup(FibTreeNode node, string ipBits)
+            {
+                Nodes.Add(node);
+                if (node.Label != null)
+                    NextHop = node.Label;
+                string examinedBits = ipBits.Substring(0, node.EdgeLabelLength ?? 0);
+                string remainderBits = ipBits.Substring(node.EdgeLabelLength ?? 0);
+                foreach (KeyValuePair<string, FibTreeNode> childEntry in node.Children)
+                    if (childEntry.Key == examinedBits)
+                        _lookup(childEntry.Value, remainderBits);
+            }
 
         }
 

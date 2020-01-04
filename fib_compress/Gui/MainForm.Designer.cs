@@ -58,10 +58,10 @@
             this.ipLookupStatisticsTableContainer = new System.Windows.Forms.Panel();
             this.ipLookupStatisticsTable = new System.Windows.Forms.DataGridView();
             this.ipLookupButtonsPanel = new System.Windows.Forms.Panel();
+            this.clearIpLookupTableButton = new System.Windows.Forms.Button();
             this.doLookupButton = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.clearIpLookupTableButton = new System.Windows.Forms.Button();
             this.header.SuspendLayout();
             this.tableLayout.SuspendLayout();
             this.originalFibTableContainerPanel.SuspendLayout();
@@ -411,6 +411,17 @@
             this.ipLookupButtonsPanel.Size = new System.Drawing.Size(1576, 47);
             this.ipLookupButtonsPanel.TabIndex = 1;
             // 
+            // clearIpLookupTableButton
+            // 
+            this.clearIpLookupTableButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.clearIpLookupTableButton.Location = new System.Drawing.Point(1323, 9);
+            this.clearIpLookupTableButton.Name = "clearIpLookupTableButton";
+            this.clearIpLookupTableButton.Size = new System.Drawing.Size(119, 30);
+            this.clearIpLookupTableButton.TabIndex = 1;
+            this.clearIpLookupTableButton.Text = "Clear";
+            this.clearIpLookupTableButton.UseVisualStyleBackColor = true;
+            this.clearIpLookupTableButton.Click += new System.EventHandler(this.clearIpLookupTableButton_Click);
+            // 
             // doLookupButton
             // 
             this.doLookupButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -431,17 +442,6 @@
             // 
             this.saveFileDialog.Filter = "CSV files|*.csv|All files|*.*";
             this.saveFileDialog.Title = "Save FIB table";
-            // 
-            // clearIpLookupTableButton
-            // 
-            this.clearIpLookupTableButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.clearIpLookupTableButton.Location = new System.Drawing.Point(1323, 9);
-            this.clearIpLookupTableButton.Name = "clearIpLookupTableButton";
-            this.clearIpLookupTableButton.Size = new System.Drawing.Size(119, 30);
-            this.clearIpLookupTableButton.TabIndex = 1;
-            this.clearIpLookupTableButton.Text = "Clear";
-            this.clearIpLookupTableButton.UseVisualStyleBackColor = true;
-            this.clearIpLookupTableButton.Click += new System.EventHandler(this.clearIpLookupTableButton_Click);
             // 
             // MainForm
             // 

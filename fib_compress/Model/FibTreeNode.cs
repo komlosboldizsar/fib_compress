@@ -16,6 +16,20 @@ namespace fib_compress.Model
 
         public Dictionary<string, FibTreeNode> Children { get; private set; } = new Dictionary<string, FibTreeNode>();
 
+        public int? EdgeLabelLength { get; private set; } = null;
+        public int NodeCount
+        {
+            get
+            {
+                int nodeCount = 1;
+                foreach (FibTreeNode child in Children.Values)
+                    nodeCount += child.NodeCount;
+                return nodeCount;
+            }
+        }
+
+        public int EdgeCount => NodeCount - 1;
+
         public FibTreeNode(FibTreeNode parent)
         {
             Parent = parent;
@@ -75,6 +89,10 @@ namespace fib_compress.Model
         {
             if (Children.ContainsKey(edgeLabel))
                 throw new Exception("This node already contains a child with this edge label!");
+            if (EdgeLabelLength == null)
+                EdgeLabelLength = edgeLabel.Length;
+            if (edgeLabel.Length != EdgeLabelLength)
+                throw new Exception(string.Format("Edge labels in this node must be {0} character(s) long.", EdgeLabelLength));
             FibTreeNode newNode = new FibTreeNode(this);
             newNode.Label = nodeLabel;
             Children.Add(edgeLabel, newNode);
