@@ -217,6 +217,11 @@ namespace fib_compress.Gui
             mFibTableOriginal.ClearEntries();
         }
 
+        private void sortFibButton_Click(object sender, EventArgs e)
+        {
+            mFibTableOriginal.SortEntries();
+        }
+
         private void initTrees()
         {
             originalFibTree.Nodes.Clear();

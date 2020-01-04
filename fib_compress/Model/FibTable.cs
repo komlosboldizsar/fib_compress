@@ -32,6 +32,19 @@ namespace fib_compress.Model
             entries.Clear();
             CollectionChanged?.Invoke();
         }
+
+        public void SortEntries()
+        {
+            entries.Sort((x, y) => {
+                string bx = x.BinaryForm;
+                string by = y.BinaryForm;
+                if (bx.Length != by.Length)
+                    return bx.Length.CompareTo(by.Length);
+                return bx.CompareTo(by);
+            });
+            CollectionChanged?.Invoke();
+        }
+
         public IEnumerator<FibEntry> GetEnumerator()
             => entries.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator()
