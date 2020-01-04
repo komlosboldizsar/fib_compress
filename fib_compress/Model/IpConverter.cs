@@ -8,7 +8,7 @@ namespace fib_compress.Model
     public static class IpConverter
     {
 
-        public static string IpToBinary(string ip)
+        public static string IpToBinary(string ip, string octetSeparator = "")
         {
             
             string[] octets = ip.Split('.');
@@ -23,6 +23,8 @@ namespace fib_compress.Model
                 if ((octetInt < 0) || (octetInt > 255))
                     throw new Exception("Format of IP address is invalid: octets must be integers between 0 and 255.");
                 binaryForm = binaryForm + Convert.ToString(octetInt, 2).PadLeft(8, '0');
+                if (i != 3)
+                    binaryForm += octetSeparator;
             }
 
             return binaryForm;

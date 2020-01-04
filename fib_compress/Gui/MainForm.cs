@@ -201,15 +201,23 @@ namespace fib_compress.Gui
             builder = new CustomDataGridViewColumnDescriptorBuilder<LookupStatistics>(_ipLookupStatisticsTable);
             builder.Type(DataGridViewColumnType.TextBox);
             builder.Header("IP");
-            builder.Width(120);
+            builder.Width(150);
             builder.UpdaterMethod((entry, cell) => { cell.Value = entry.IP; });
+            builder.BuildAndAdd();
+
+            // Column: prefix, IP format
+            builder = new CustomDataGridViewColumnDescriptorBuilder<LookupStatistics>(_ipLookupStatisticsTable);
+            builder.Type(DataGridViewColumnType.TextBox);
+            builder.Header("IP (binary)");
+            builder.Width(300);
+            builder.UpdaterMethod((entry, cell) => { cell.Value = IpConverter.IpToBinary(entry.IP, " "); });
             builder.BuildAndAdd();
 
             // Column: next hop
             builder = new CustomDataGridViewColumnDescriptorBuilder<LookupStatistics>(_ipLookupStatisticsTable);
             builder.Type(DataGridViewColumnType.TextBox);
             builder.Header("Next hop");
-            builder.Width(120);
+            builder.Width(150);
             builder.UpdaterMethod((entry, cell) => { cell.Value = entry.NextHop ?? "-"; });
             builder.BuildAndAdd();
 
