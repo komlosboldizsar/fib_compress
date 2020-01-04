@@ -59,14 +59,22 @@ namespace fib_compress.Gui
         }
 
         private void MFibTreeOriginal_TreeChanged()
-            => visualizeTree(mFibTreeOriginal, originalFibTree);
-        
-        private void MFibTreeNormalized_TreeChanged()
-             => visualizeTree(mFibTreeNormalized, normalizedFibTree);
+        {
+            visualizeTree(mFibTreeOriginal, originalFibTree);
+            displayTreeInfo(mFibTreeOriginal, originalFibTreeInfoLabel);
+        }
 
-        private void MFibTreeCompressed_TreeChanged()
-            => visualizeTree(mFibTreeCompressed, compressedFibTree);
-        
+
+        private void MFibTreeNormalized_TreeChanged() {
+            visualizeTree(mFibTreeNormalized, normalizedFibTree);
+            displayTreeInfo(mFibTreeNormalized, normalizedFibTreeInfoLabel);
+        }
+
+        private void MFibTreeCompressed_TreeChanged() {
+            visualizeTree(mFibTreeCompressed, compressedFibTree);
+            displayTreeInfo(mFibTreeCompressed, compressedFibTreeInfoLabel);
+        }
+
         private void updateModel()
         {
             mFibTreeOriginal.CreateFromFibTable(mFibTableOriginal);
@@ -332,6 +340,14 @@ namespace fib_compress.Gui
                 addNodeWithChildren(child.Value, treeView, newNode, child.Key);
         }
 
+        private void displayTreeInfo(FibTree tree, Label infoLabel)
+        {
+            infoLabel.Text = string.Format("Nodes: {0}, edges: {1}, max. depth: {2}",
+                tree.NodeCount,
+                tree.EdgeCount,
+                tree.Root.GetDepth());
+        }
+
         private MultiLookup visualizedLookup = null;
 
         private void visualizeLookups(MultiLookup multiLookup)
@@ -484,6 +500,5 @@ namespace fib_compress.Gui
         {
             visualizeLookups(null);
         }
-
     }
 }
