@@ -254,6 +254,15 @@ namespace fib_compress.Gui
             builder.AddChangeEvent(nameof(MultiLookup.EdgesCompressed)); 
             builder.BuildAndAdd();
 
+            // Column: visualize
+            builder = new CustomDataGridViewColumnDescriptorBuilder<MultiLookup>(_ipLookupStatisticsTable);
+            builder.Type(DataGridViewColumnType.Button);
+            builder.Header("Visualize");
+            builder.Width(90);
+            builder.ButtonText("Visualize");
+            builder.CellContentClickHandlerMethod((entry, cell, e) => { visualizeLookups(entry);  });
+            builder.BuildAndAdd();
+
             // Bind database
             _ipLookupStatisticsTable.BoundCollection = mMultiLookupCollection;
 
@@ -317,8 +326,29 @@ namespace fib_compress.Gui
                 (!string.IsNullOrEmpty(edgeLabel) ? string.Format("--{0}-->", edgeLabel) : "(root)"),
                 ((node.Label != null) ? string.Format(" :: {0} [{1}]", node.Label.Text, node.Label.NextHop) : ""));
             TreeNode newNode = parentCollection.Add(newNodeText);
+            newNode.Tag = node;
             foreach (KeyValuePair<string, FibTreeNode> child in node.Children)
                 addNodeWithChildren(child.Value, treeView, newNode, child.Key);
+        }
+
+        private void visualizeLookups(MultiLookup multiLookup)
+        {
+            visualizeLookup(multiLookup?.LookupOriginal, originalFibTree.Nodes);
+            visualizeLookup(multiLookup?.LookupNormalized, normalizedFibTree.Nodes);
+            visualizeLookup(multiLookup?.LookupCompressed, compressedFibTree.Nodes);
+        }
+
+        private void visualizeLookup(FibTree.Lookup lookup, TreeNodeCollection treeviewNodeCollection)
+        {
+            foreach (TreeNode node in treeviewNodeCollection) {
+                visualizeLookup(lookup, node.Nodes);
+                if (lookup == null)
+                {
+                    node.BackColor = Color.White;
+                    return;
+                }
+                node.BackColor = lookup.Nodes.Contains(node.Tag) ? Color.LightGreen : Color.White;
+            }
         }
 
         private void loadButton_Click(object sender, EventArgs e)
@@ -368,6 +398,9 @@ namespace fib_compress.Gui
             public int? EdgesOriginal { get; private set; }
             public int? EdgesNormalized { get; private set; }
             public int? EdgesCompressed { get; private set; }
+            public FibTree.Lookup LookupOriginal { get; private set; }
+            public FibTree.Lookup LookupNormalized { get; private set; }
+            public FibTree.Lookup LookupCompressed { get; private set; }
 
             private FibTree mFibTreeOriginal;
             private FibTree mFibTreeNormalized;
@@ -386,13 +419,13 @@ namespace fib_compress.Gui
 
             public void DoLookup()
             {
-                FibTree.Lookup lookupOriginal = mFibTreeOriginal.DoLookup(IP);
-                FibTree.Lookup lookupNormalized = mFibTreeNormalized.DoLookup(IP);
-                FibTree.Lookup lookupCompressed = mFibTreeCompressed.DoLookup(IP);
-                EdgesOriginal = lookupOriginal.EdgeCount;
-                EdgesNormalized = lookupNormalized.EdgeCount;
-                EdgesCompressed = lookupCompressed.EdgeCount;
-                NextHop = lookupOriginal.NextHop?.NextHop;
+                LookupOriginal = mFibTreeOriginal.DoLookup(IP);
+                LookupNormalized = mFibTreeNormalized.DoLookup(IP);
+                LookupCompressed = mFibTreeCompressed.DoLookup(IP);
+                EdgesOriginal = LookupOriginal.EdgeCount;
+                EdgesNormalized = LookupNormalized.EdgeCount;
+                EdgesCompressed = LookupCompressed.EdgeCount;
+                NextHop = LookupOriginal.NextHop?.NextHop;
                 PropertyChanged?.Invoke(nameof(EdgesOriginal));
                 PropertyChanged?.Invoke(nameof(EdgesNormalized));
                 PropertyChanged?.Invoke(nameof(EdgesCompressed));
@@ -431,6 +464,10 @@ namespace fib_compress.Gui
 
         }
 
-        
+        private void clearVisualizationButton_Click(object sender, EventArgs e)
+        {
+            visualizeLookups(null);
+        }
+
     }
 }

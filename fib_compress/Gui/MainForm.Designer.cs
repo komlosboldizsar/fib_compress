@@ -62,6 +62,7 @@
             this.doLookupButton = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.clearVisualizationButton = new System.Windows.Forms.Button();
             this.header.SuspendLayout();
             this.tableLayout.SuspendLayout();
             this.originalFibTableContainerPanel.SuspendLayout();
@@ -402,6 +403,7 @@
             // ipLookupButtonsPanel
             // 
             this.ipLookupButtonsPanel.AutoSize = true;
+            this.ipLookupButtonsPanel.Controls.Add(this.clearVisualizationButton);
             this.ipLookupButtonsPanel.Controls.Add(this.clearIpLookupTableButton);
             this.ipLookupButtonsPanel.Controls.Add(this.doLookupButton);
             this.ipLookupButtonsPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -442,6 +444,17 @@
             // 
             this.saveFileDialog.Filter = "CSV files|*.csv|All files|*.*";
             this.saveFileDialog.Title = "Save FIB table";
+            // 
+            // clearVisualizationButton
+            // 
+            this.clearVisualizationButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.clearVisualizationButton.Location = new System.Drawing.Point(1054, 9);
+            this.clearVisualizationButton.Name = "clearVisualizationButton";
+            this.clearVisualizationButton.Size = new System.Drawing.Size(163, 30);
+            this.clearVisualizationButton.TabIndex = 2;
+            this.clearVisualizationButton.Text = "Clear visualization";
+            this.clearVisualizationButton.UseVisualStyleBackColor = true;
+            this.clearVisualizationButton.Click += new System.EventHandler(this.clearVisualizationButton_Click);
             // 
             // MainForm
             // 
@@ -518,6 +531,7 @@
         private System.Windows.Forms.DataGridView ipLookupStatisticsTable;
         private System.Windows.Forms.Panel ipLookupStatisticsTableContainer;
         private System.Windows.Forms.Button clearIpLookupTableButton;
+        private System.Windows.Forms.Button clearVisualizationButton;
     }
 }
 
