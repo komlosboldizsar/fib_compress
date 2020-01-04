@@ -17,7 +17,7 @@ namespace fib_compress.Model
         public void CreateFromFibTable(FibTable table)
         {
 
-            Root = new FibTreeNode(null, null);
+            Root = new FibTreeNode(null);
             Labels.Clear();
 
             foreach (FibEntry entry in table)
@@ -26,21 +26,10 @@ namespace fib_compress.Model
                 FibTreeNode node = Root;
                 for (int i = 0; i < entry.BinaryForm.Length; i++)
                 {
-
-                    if (entry.BinaryForm[i] == '0')
-                    {
-                        if (node.Child0 == null)
-                            node.Child0 = new FibTreeNode();
-                        node = node.Child0;
-                    }
-
-                    if (entry.BinaryForm[i] == '1')
-                    {
-                        if (node.Child1 == null)
-                            node.Child1 = new FibTreeNode();
-                        node = node.Child1;
-                    }
-
+                    int edgeLabel = entry.BinaryForm[i] - (int)'0';
+                    if (node.GetChild(edgeLabel) == null)
+                        node.AddChild(edgeLabel);
+                    node = node.GetChild(edgeLabel);
                 }
 
                 FibTreeLabel label = Labels.GetLabelByNextHop(entry.NextHop);
@@ -63,7 +52,7 @@ namespace fib_compress.Model
         {
 
             // TODO: this just copies the tree
-            Root = new FibTreeNode();
+            Root = new FibTreeNode(null);
             Labels.Clear();
 
             copyNodeAndChildrens(Root, tree.Root);
@@ -75,16 +64,10 @@ namespace fib_compress.Model
         private void copyNodeAndChildrens(FibTreeNode to, FibTreeNode from)
         {
 
-            if (from.Child0 != null)
+            foreach (KeyValuePair<string, FibTreeNode> child in from.Children)
             {
-                to.Child0 = new FibTreeNode();
-                copyNodeAndChildrens(to.Child0, from.Child0);
-            }
-
-            if (from.Child1 != null)
-            {
-                to.Child1 = new FibTreeNode();
-                copyNodeAndChildrens(to.Child1, from.Child1);
+                FibTreeNode newNode = to.AddChild(child.Key);
+                copyNodeAndChildrens(newNode, child.Value);
             }
 
             if (from.Label != null)

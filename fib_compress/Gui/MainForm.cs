@@ -229,10 +229,8 @@ namespace fib_compress.Gui
                 (!string.IsNullOrEmpty(edgeLabel) ? string.Format("-{0}->", edgeLabel) : "(root)"),
                 ((node.Label != null) ? string.Format(": {0} [{1}]", node.Label.Text, node.Label.NextHop) : ""));
             TreeNode newNode = parentCollection.Add(newNodeText);
-            if (node.Child0 != null)
-                addNodeWithChildren(node.Child0, treeView, newNode, "0");
-            if (node.Child1 != null)
-                addNodeWithChildren(node.Child1, treeView, newNode, "1");
+            foreach (KeyValuePair<string, FibTreeNode> child in node.Children)
+                addNodeWithChildren(child.Value, treeView, newNode, child.Key);
         }
 
     }

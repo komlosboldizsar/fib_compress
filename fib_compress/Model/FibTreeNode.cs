@@ -12,20 +12,50 @@ namespace fib_compress.Model
 
         public string LabelText => Label?.Text;
 
-        public FibTreeNode Child0 { get; set; }
+        public FibTreeNode Parent { get; private set; }
 
-        public FibTreeNode Child1 { get; set; }
+        public Dictionary<string, FibTreeNode> Children { get; private set; } = new Dictionary<string, FibTreeNode>();
 
-        public FibTreeNode()
+        public FibTreeNode(FibTreeNode parent)
         {
-            Child0 = null;
-            Child1 = null;
+            Parent = parent;
         }
 
-        public FibTreeNode(FibTreeNode child0, FibTreeNode child1)
+        public FibTreeNode(FibTreeNode parent, FibTreeNode child0, FibTreeNode child1)
         {
-            Child0 = child0;
-            Child1 = child1;
+            Parent = parent;
+            Children.Add("0", child0);
+            Children.Add("1", child1);
+        }
+
+        public FibTreeNode GetChild(string edgeLabel)
+        {
+            if (!Children.TryGetValue(edgeLabel, out FibTreeNode child))
+                return null;
+            return child;
+        }
+
+        public FibTreeNode GetChild(int edgeLabel)
+        {
+            if ((edgeLabel == 0) || (edgeLabel == 1))
+                return GetChild(string.Format("{0}", edgeLabel));
+            return null;
+        }
+
+        public FibTreeNode AddChild(string edgeLabel, FibTreeLabel nodeLabel = null)
+        {
+            if (Children.ContainsKey(edgeLabel))
+                throw new Exception("This node already contains a child with this edge label!");
+            FibTreeNode newNode = new FibTreeNode(this);
+            Children.Add(edgeLabel, newNode);
+            return newNode;
+        }
+
+        public FibTreeNode AddChild(int edgeLabel, FibTreeLabel nodeLabel = null)
+        {
+            if ((edgeLabel == 0) || (edgeLabel == 1))
+                return AddChild(string.Format("{0}", edgeLabel), nodeLabel);
+            throw new Exception("Invalid integer edge label, only 0 and 1 are supported!");
         }
 
     }

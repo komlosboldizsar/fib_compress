@@ -53,10 +53,8 @@ namespace fib_compress.Model
                 entries.Add(newEntry);
             }
 
-            if (node.Child0 != null)
-                addTreeNodeAndChildren(node.Child0, binaryPath + "0");
-            if (node.Child1 != null)
-                addTreeNodeAndChildren(node.Child1, binaryPath + "1");
+            foreach (KeyValuePair<string, FibTreeNode> child in node.Children)
+                addTreeNodeAndChildren(child.Value, binaryPath + child.Key);
 
         }
 
