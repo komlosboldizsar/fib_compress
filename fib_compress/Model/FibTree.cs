@@ -54,6 +54,11 @@ namespace fib_compress.Model
 
         }
 
+        public void CreateFromFibTreeAndNormalize(FibTree tree)
+        {
+            throw new NotImplementedException();
+        }
+
         public void CreateFromNormalizedFibTreeAndCompress(FibTree tree)
         {
 
