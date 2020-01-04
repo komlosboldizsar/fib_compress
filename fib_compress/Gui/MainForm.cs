@@ -124,7 +124,7 @@ namespace fib_compress.Gui
             builder.Header("Binary");
             builder.Width(120);
             builder.UpdaterMethod((entry, cell) => { cell.Value = string.IsNullOrEmpty(entry.BinaryForm) ? "-" : entry.BinaryForm; });
-            builder.AddChangeEvent(nameof(FibEntry.IpForm));
+            builder.AddChangeEvent(nameof(FibEntry.BinaryForm));
             builder.BuildAndAdd();
 
             // Column: next hop

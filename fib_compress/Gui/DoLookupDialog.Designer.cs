@@ -76,7 +76,7 @@
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.okButton.Location = new System.Drawing.Point(280, 71);
+            this.okButton.Location = new System.Drawing.Point(280, 63);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(79, 36);
             this.okButton.TabIndex = 3;
@@ -87,7 +87,7 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(195, 71);
+            this.cancelButton.Location = new System.Drawing.Point(195, 63);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(79, 36);
             this.cancelButton.TabIndex = 4;
@@ -100,7 +100,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(371, 119);
+            this.ClientSize = new System.Drawing.Size(371, 111);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.tableLayoutPanel1);
@@ -109,7 +109,8 @@
             this.Name = "DoLookupDialog";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "Do lookup";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Do IP lookup";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
