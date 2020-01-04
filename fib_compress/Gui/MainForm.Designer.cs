@@ -36,6 +36,8 @@
             this.originalFibTableContainer = new System.Windows.Forms.Panel();
             this.originalFibTable = new System.Windows.Forms.DataGridView();
             this.originalFibButtonsPanel = new System.Windows.Forms.Panel();
+            this.loadButton = new System.Windows.Forms.Button();
+            this.saveButton = new System.Windows.Forms.Button();
             this.clearFibButton = new System.Windows.Forms.Button();
             this.addFibEntryButton = new System.Windows.Forms.Button();
             this.originalFibTree = new System.Windows.Forms.TreeView();
@@ -51,8 +53,6 @@
             this.normalizedNextHopTableContainer = new System.Windows.Forms.Panel();
             this.normalizedNextHopTable = new System.Windows.Forms.DataGridView();
             this.normalizedFibTree = new System.Windows.Forms.TreeView();
-            this.saveButton = new System.Windows.Forms.Button();
-            this.loadButton = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.header.SuspendLayout();
@@ -177,6 +177,28 @@
             this.originalFibButtonsPanel.Padding = new System.Windows.Forms.Padding(5);
             this.originalFibButtonsPanel.Size = new System.Drawing.Size(488, 48);
             this.originalFibButtonsPanel.TabIndex = 0;
+            // 
+            // loadButton
+            // 
+            this.loadButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.loadButton.Location = new System.Drawing.Point(340, 8);
+            this.loadButton.Name = "loadButton";
+            this.loadButton.Size = new System.Drawing.Size(67, 32);
+            this.loadButton.TabIndex = 3;
+            this.loadButton.Text = "Load";
+            this.loadButton.UseVisualStyleBackColor = true;
+            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
+            // 
+            // saveButton
+            // 
+            this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveButton.Location = new System.Drawing.Point(413, 8);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(67, 32);
+            this.saveButton.TabIndex = 2;
+            this.saveButton.Text = "Save";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // clearFibButton
             // 
@@ -322,26 +344,6 @@
             this.normalizedFibTree.Size = new System.Drawing.Size(488, 288);
             this.normalizedFibTree.TabIndex = 12;
             // 
-            // saveButton
-            // 
-            this.saveButton.Location = new System.Drawing.Point(413, 8);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(67, 32);
-            this.saveButton.TabIndex = 2;
-            this.saveButton.Text = "Save";
-            this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
-            // 
-            // loadButton
-            // 
-            this.loadButton.Location = new System.Drawing.Point(340, 8);
-            this.loadButton.Name = "loadButton";
-            this.loadButton.Size = new System.Drawing.Size(67, 32);
-            this.loadButton.TabIndex = 3;
-            this.loadButton.Text = "Load";
-            this.loadButton.UseVisualStyleBackColor = true;
-            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
-            // 
             // openFileDialog
             // 
             this.openFileDialog.Filter = "CSV files|*.csv|All files|*.*";
@@ -361,6 +363,7 @@
             this.Controls.Add(this.header);
             this.Name = "MainForm";
             this.Text = "FIB_COMPRESS";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.header.ResumeLayout(false);
             this.header.PerformLayout();

@@ -72,7 +72,7 @@ namespace fib_compress.Gui
         private void initTables()
         {
             initFibTable(ref originalFibTable, ref _originalFibTable, originalFibTableContainer, true, mFibTableOriginal);
-            initFibTable(ref normalizedFibTable, ref _normalizedFibTable, normalizedFibTableContainer, true, mFibTableNormalized);
+            initFibTable(ref normalizedFibTable, ref _normalizedFibTable, normalizedFibTableContainer, false, mFibTableNormalized);
             initFibTable(ref compressedFibTable, ref _compressedFibTable, compressedFibTableContainer, false, mFibTableCompressed);
             initNextHopTable(ref originalNextHopTable, ref _originalNextHopTable, originalNextHopTableContainer, mFibTreeOriginal);
             initNextHopTable(ref normalizedNextHopTable, ref _normalizedNextHopTable, normalizedNextHopTableContainer, mFibTreeNormalized);
@@ -111,6 +111,15 @@ namespace fib_compress.Gui
             builder.Header("Prefix");
             builder.Width(120);
             builder.UpdaterMethod((entry, cell) => { cell.Value = entry.IpForm; });
+            builder.AddChangeEvent(nameof(FibEntry.IpForm));
+            builder.BuildAndAdd();
+
+            // Column: prefix, IP format
+            builder = new CustomDataGridViewColumnDescriptorBuilder<FibEntry>(customMember);
+            builder.Type(DataGridViewColumnType.TextBox);
+            builder.Header("Binary");
+            builder.Width(120);
+            builder.UpdaterMethod((entry, cell) => { cell.Value = string.IsNullOrEmpty(entry.BinaryForm) ? "-" : entry.BinaryForm; });
             builder.AddChangeEvent(nameof(FibEntry.IpForm));
             builder.BuildAndAdd();
 
@@ -226,8 +235,8 @@ namespace fib_compress.Gui
         {
             TreeNodeCollection parentCollection = parent?.Nodes ?? treeView.Nodes;
             string newNodeText = string.Format("{0}{1}",
-                (!string.IsNullOrEmpty(edgeLabel) ? string.Format("-{0}->", edgeLabel) : "(root)"),
-                ((node.Label != null) ? string.Format(": {0} [{1}]", node.Label.Text, node.Label.NextHop) : ""));
+                (!string.IsNullOrEmpty(edgeLabel) ? string.Format("--{0}-->", edgeLabel) : "(root)"),
+                ((node.Label != null) ? string.Format(" :: {0} [{1}]", node.Label.Text, node.Label.NextHop) : ""));
             TreeNode newNode = parentCollection.Add(newNodeText);
             foreach (KeyValuePair<string, FibTreeNode> child in node.Children)
                 addNodeWithChildren(child.Value, treeView, newNode, child.Key);
