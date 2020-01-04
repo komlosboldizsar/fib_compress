@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="Model\FibEntry.cs" />
     <Compile Include="Model\FibTable.cs" />
+    <Compile Include="Model\FibTablePersister.cs" />
     <Compile Include="Model\FibTree.cs" />
     <Compile Include="Model\FibTreeLabel.cs" />
     <Compile Include="Model\FibTreeNode.cs" />

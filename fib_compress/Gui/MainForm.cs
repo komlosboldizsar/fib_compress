@@ -233,5 +233,21 @@ namespace fib_compress.Gui
                 addNodeWithChildren(child.Value, treeView, newNode, child.Key);
         }
 
+        private void loadButton_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                mFibTableOriginal.ReadFromFile(openFileDialog.FileName);
+            }
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                mFibTableOriginal.WriteToFile(saveFileDialog.FileName);
+            }
+        }
+
     }
 }
