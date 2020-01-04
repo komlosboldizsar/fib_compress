@@ -47,6 +47,7 @@ namespace fib_compress.Model
             if (Children.ContainsKey(edgeLabel))
                 throw new Exception("This node already contains a child with this edge label!");
             FibTreeNode newNode = new FibTreeNode(this);
+            newNode.Label = nodeLabel;
             Children.Add(edgeLabel, newNode);
             return newNode;
         }
@@ -56,6 +57,11 @@ namespace fib_compress.Model
             if ((edgeLabel == 0) || (edgeLabel == 1))
                 return AddChild(string.Format("{0}", edgeLabel), nodeLabel);
             throw new Exception("Invalid integer edge label, only 0 and 1 are supported!");
+        }
+
+        public void ClearChildren()
+        {
+            Children.Clear();
         }
 
     }
