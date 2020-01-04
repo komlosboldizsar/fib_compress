@@ -20,9 +20,9 @@ namespace fib_compress.Gui
         }
 
         private FibTable mFibTableOriginal;
-        private FibTable mFibTableOrtc;
+        private FibTable mFibTableCompressed;
         private FibTree mFibTreeOriginal;
-        private FibTree mFibTreeOrtc;
+        private FibTree mFibTreeCompressed;
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -35,12 +35,12 @@ namespace fib_compress.Gui
         private void initModel()
         {
             mFibTableOriginal = new FibTable();
-            mFibTableOrtc = new FibTable();
+            mFibTableCompressed = new FibTable();
             mFibTreeOriginal = new FibTree();
-            mFibTreeOrtc = new FibTree();
+            mFibTreeCompressed = new FibTree();
             mFibTableOriginal.CollectionChanged += MFibTableOriginal_CollectionChanged;
             mFibTreeOriginal.TreeChanged += MFibTreeOriginal_TreeChanged;
-            mFibTreeOrtc.TreeChanged += MFibTreeOrtc_TreeChanged;
+            mFibTreeCompressed.TreeChanged += MFibTreeCompressed_TreeChanged;
         }
 
         private void MFibTableOriginal_CollectionChanged()
@@ -49,28 +49,28 @@ namespace fib_compress.Gui
         private void MFibTreeOriginal_TreeChanged()
             => visualizeTree(mFibTreeOriginal, originalFibTree);
 
-        private void MFibTreeOrtc_TreeChanged()
-            => visualizeTree(mFibTreeOrtc, ortcFibTree);
+        private void MFibTreeCompressed_TreeChanged()
+            => visualizeTree(mFibTreeCompressed, compressedFibTree);
         
         private void updateModel()
         {
             mFibTreeOriginal.CreateFromFibTable(mFibTableOriginal);
-            mFibTreeOrtc.CreateFromFibTreeByOrtc(mFibTreeOriginal);
-            mFibTableOrtc.CreateFromFibTree(mFibTreeOrtc);
+            mFibTreeCompressed.CreateFromNormalizedFibTreeAndCompress(mFibTreeOriginal);
+            mFibTableCompressed.CreateFromFibTree(mFibTreeCompressed);
         }
 
         private void initTables()
         {
             initFibTable(ref originalFibTable, ref _originalFibTable, originalFibTableContainer, true, mFibTableOriginal);
-            initFibTable(ref ortcFibTable, ref _ortcFibTable, ortcFibTableContainer, false, mFibTableOrtc);
+            initFibTable(ref compressedFibTable, ref _compressedFibTable, compressedFibTableContainer, false, mFibTableCompressed);
             initNextHopTable(ref originalNextHopTable, ref _originalNextHopTable, originalNextHopTableContainer, mFibTreeOriginal);
-            initNextHopTable(ref ortcNextHopTable, ref _ortcNextHopTable, ortcNextHopTableContainer, mFibTreeOrtc);
+            initNextHopTable(ref compressedNextHopTable, ref _compressedNextHopTable, compressedNextHopTableContainer, mFibTreeCompressed);
         }
 
         private CustomDataGridView<FibEntry> _originalFibTable;
-        private CustomDataGridView<FibEntry> _ortcFibTable;
+        private CustomDataGridView<FibEntry> _compressedFibTable;
         private CustomDataGridView<FibTreeLabel> _originalNextHopTable;
-        private CustomDataGridView<FibTreeLabel> _ortcNextHopTable;
+        private CustomDataGridView<FibTreeLabel> _compressedNextHopTable;
 
         protected DataGridViewCellStyle BOLD_TEXT_CELL_STYLE
         {
@@ -197,7 +197,7 @@ namespace fib_compress.Gui
         private void initTrees()
         {
             originalFibTree.Nodes.Clear();
-            ortcFibTree.Nodes.Clear();
+            compressedFibTree.Nodes.Clear();
         }
 
         private void visualizeTree(FibTree tree, TreeView treeView)

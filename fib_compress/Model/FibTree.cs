@@ -54,7 +54,7 @@ namespace fib_compress.Model
 
         }
 
-        public void CreateFromFibTreeByOrtc(FibTree tree)
+        public void CreateFromNormalizedFibTreeAndCompress(FibTree tree)
         {
 
             // TODO: this just copies the tree

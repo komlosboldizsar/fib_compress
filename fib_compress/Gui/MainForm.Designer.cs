@@ -39,25 +39,25 @@
             this.clearFibButton = new System.Windows.Forms.Button();
             this.addFibEntryButton = new System.Windows.Forms.Button();
             this.originalFibTree = new System.Windows.Forms.TreeView();
-            this.ortcFibTree = new System.Windows.Forms.TreeView();
-            this.ortcFibTableContainer = new System.Windows.Forms.Panel();
-            this.ortcFibTable = new System.Windows.Forms.DataGridView();
+            this.compressedFibTree = new System.Windows.Forms.TreeView();
+            this.compressedFibTableContainer = new System.Windows.Forms.Panel();
+            this.compressedFibTable = new System.Windows.Forms.DataGridView();
             this.originalNextHopTableContainer = new System.Windows.Forms.Panel();
             this.originalNextHopTable = new System.Windows.Forms.DataGridView();
-            this.ortcNextHopTableContainer = new System.Windows.Forms.Panel();
-            this.ortcNextHopTable = new System.Windows.Forms.DataGridView();
+            this.compressedNextHopTableContainer = new System.Windows.Forms.Panel();
+            this.compressedNextHopTable = new System.Windows.Forms.DataGridView();
             this.header.SuspendLayout();
             this.tableLayout.SuspendLayout();
             this.originalFibTableContainerPanel.SuspendLayout();
             this.originalFibTableContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.originalFibTable)).BeginInit();
             this.originalFibButtonsPanel.SuspendLayout();
-            this.ortcFibTableContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ortcFibTable)).BeginInit();
+            this.compressedFibTableContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.compressedFibTable)).BeginInit();
             this.originalNextHopTableContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.originalNextHopTable)).BeginInit();
-            this.ortcNextHopTableContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ortcNextHopTable)).BeginInit();
+            this.compressedNextHopTableContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.compressedNextHopTable)).BeginInit();
             this.SuspendLayout();
             // 
             // header
@@ -81,9 +81,9 @@
             this.headerText.Location = new System.Drawing.Point(0, 0);
             this.headerText.Name = "headerText";
             this.headerText.Padding = new System.Windows.Forms.Padding(10);
-            this.headerText.Size = new System.Drawing.Size(216, 67);
+            this.headerText.Size = new System.Drawing.Size(304, 67);
             this.headerText.TabIndex = 1;
-            this.headerText.Text = "FIB_ORTC";
+            this.headerText.Text = "FIB_COMPRESS";
             // 
             // headerBorder
             // 
@@ -104,10 +104,10 @@
             this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayout.Controls.Add(this.originalFibTableContainerPanel, 0, 0);
             this.tableLayout.Controls.Add(this.originalFibTree, 1, 0);
-            this.tableLayout.Controls.Add(this.ortcFibTree, 1, 1);
-            this.tableLayout.Controls.Add(this.ortcFibTableContainer, 0, 1);
+            this.tableLayout.Controls.Add(this.compressedFibTree, 1, 1);
+            this.tableLayout.Controls.Add(this.compressedFibTableContainer, 0, 1);
             this.tableLayout.Controls.Add(this.originalNextHopTableContainer, 2, 0);
-            this.tableLayout.Controls.Add(this.ortcNextHopTableContainer, 2, 1);
+            this.tableLayout.Controls.Add(this.compressedNextHopTableContainer, 2, 1);
             this.tableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayout.Location = new System.Drawing.Point(0, 71);
             this.tableLayout.Name = "tableLayout";
@@ -187,33 +187,33 @@
             this.originalFibTree.Size = new System.Drawing.Size(488, 435);
             this.originalFibTree.TabIndex = 2;
             // 
-            // ortcFibTree
+            // compressedFibTree
             // 
-            this.ortcFibTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ortcFibTree.Location = new System.Drawing.Point(497, 444);
-            this.ortcFibTree.Name = "ortcFibTree";
-            this.ortcFibTree.Size = new System.Drawing.Size(488, 435);
-            this.ortcFibTree.TabIndex = 3;
+            this.compressedFibTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.compressedFibTree.Location = new System.Drawing.Point(497, 444);
+            this.compressedFibTree.Name = "compressedFibTree";
+            this.compressedFibTree.Size = new System.Drawing.Size(488, 435);
+            this.compressedFibTree.TabIndex = 3;
             // 
-            // ortcFibTableContainer
+            // compressedFibTableContainer
             // 
-            this.ortcFibTableContainer.Controls.Add(this.ortcFibTable);
-            this.ortcFibTableContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ortcFibTableContainer.Location = new System.Drawing.Point(3, 444);
-            this.ortcFibTableContainer.Name = "ortcFibTableContainer";
-            this.ortcFibTableContainer.Size = new System.Drawing.Size(488, 435);
-            this.ortcFibTableContainer.TabIndex = 6;
+            this.compressedFibTableContainer.Controls.Add(this.compressedFibTable);
+            this.compressedFibTableContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.compressedFibTableContainer.Location = new System.Drawing.Point(3, 444);
+            this.compressedFibTableContainer.Name = "compressedFibTableContainer";
+            this.compressedFibTableContainer.Size = new System.Drawing.Size(488, 435);
+            this.compressedFibTableContainer.TabIndex = 6;
             // 
-            // ortcFibTable
+            // compressedFibTable
             // 
-            this.ortcFibTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ortcFibTable.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ortcFibTable.Location = new System.Drawing.Point(0, 0);
-            this.ortcFibTable.Name = "ortcFibTable";
-            this.ortcFibTable.RowHeadersWidth = 51;
-            this.ortcFibTable.RowTemplate.Height = 24;
-            this.ortcFibTable.Size = new System.Drawing.Size(488, 435);
-            this.ortcFibTable.TabIndex = 0;
+            this.compressedFibTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.compressedFibTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.compressedFibTable.Location = new System.Drawing.Point(0, 0);
+            this.compressedFibTable.Name = "compressedFibTable";
+            this.compressedFibTable.RowHeadersWidth = 51;
+            this.compressedFibTable.RowTemplate.Height = 24;
+            this.compressedFibTable.Size = new System.Drawing.Size(488, 435);
+            this.compressedFibTable.TabIndex = 0;
             // 
             // originalNextHopTableContainer
             // 
@@ -235,25 +235,25 @@
             this.originalNextHopTable.Size = new System.Drawing.Size(488, 435);
             this.originalNextHopTable.TabIndex = 0;
             // 
-            // ortcNextHopTableContainer
+            // compressedNextHopTableContainer
             // 
-            this.ortcNextHopTableContainer.Controls.Add(this.ortcNextHopTable);
-            this.ortcNextHopTableContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ortcNextHopTableContainer.Location = new System.Drawing.Point(991, 444);
-            this.ortcNextHopTableContainer.Name = "ortcNextHopTableContainer";
-            this.ortcNextHopTableContainer.Size = new System.Drawing.Size(488, 435);
-            this.ortcNextHopTableContainer.TabIndex = 8;
+            this.compressedNextHopTableContainer.Controls.Add(this.compressedNextHopTable);
+            this.compressedNextHopTableContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.compressedNextHopTableContainer.Location = new System.Drawing.Point(991, 444);
+            this.compressedNextHopTableContainer.Name = "compressedNextHopTableContainer";
+            this.compressedNextHopTableContainer.Size = new System.Drawing.Size(488, 435);
+            this.compressedNextHopTableContainer.TabIndex = 8;
             // 
-            // ortcNextHopTable
+            // compressedNextHopTable
             // 
-            this.ortcNextHopTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ortcNextHopTable.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ortcNextHopTable.Location = new System.Drawing.Point(0, 0);
-            this.ortcNextHopTable.Name = "ortcNextHopTable";
-            this.ortcNextHopTable.RowHeadersWidth = 51;
-            this.ortcNextHopTable.RowTemplate.Height = 24;
-            this.ortcNextHopTable.Size = new System.Drawing.Size(488, 435);
-            this.ortcNextHopTable.TabIndex = 0;
+            this.compressedNextHopTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.compressedNextHopTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.compressedNextHopTable.Location = new System.Drawing.Point(0, 0);
+            this.compressedNextHopTable.Name = "compressedNextHopTable";
+            this.compressedNextHopTable.RowHeadersWidth = 51;
+            this.compressedNextHopTable.RowTemplate.Height = 24;
+            this.compressedNextHopTable.Size = new System.Drawing.Size(488, 435);
+            this.compressedNextHopTable.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -263,7 +263,7 @@
             this.Controls.Add(this.tableLayout);
             this.Controls.Add(this.header);
             this.Name = "MainForm";
-            this.Text = "FIB_ORTC";
+            this.Text = "FIB_COMPRESS";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.header.ResumeLayout(false);
             this.header.PerformLayout();
@@ -273,12 +273,12 @@
             this.originalFibTableContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.originalFibTable)).EndInit();
             this.originalFibButtonsPanel.ResumeLayout(false);
-            this.ortcFibTableContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ortcFibTable)).EndInit();
+            this.compressedFibTableContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.compressedFibTable)).EndInit();
             this.originalNextHopTableContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.originalNextHopTable)).EndInit();
-            this.ortcNextHopTableContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ortcNextHopTable)).EndInit();
+            this.compressedNextHopTableContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.compressedNextHopTable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -295,15 +295,15 @@
         private System.Windows.Forms.Button addFibEntryButton;
         private System.Windows.Forms.DataGridView originalFibTable;
         private System.Windows.Forms.TreeView originalFibTree;
-        private System.Windows.Forms.TreeView ortcFibTree;
+        private System.Windows.Forms.TreeView compressedFibTree;
         private System.Windows.Forms.Button clearFibButton;
         private System.Windows.Forms.Panel originalFibTableContainer;
-        private System.Windows.Forms.Panel ortcFibTableContainer;
-        private System.Windows.Forms.DataGridView ortcFibTable;
+        private System.Windows.Forms.Panel compressedFibTableContainer;
+        private System.Windows.Forms.DataGridView compressedFibTable;
         private System.Windows.Forms.Panel originalNextHopTableContainer;
         private System.Windows.Forms.DataGridView originalNextHopTable;
-        private System.Windows.Forms.Panel ortcNextHopTableContainer;
-        private System.Windows.Forms.DataGridView ortcNextHopTable;
+        private System.Windows.Forms.Panel compressedNextHopTableContainer;
+        private System.Windows.Forms.DataGridView compressedNextHopTable;
     }
 }
 
