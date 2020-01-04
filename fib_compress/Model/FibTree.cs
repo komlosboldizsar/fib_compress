@@ -143,7 +143,7 @@ namespace fib_compress.Model
         {
             if (parent == child)
                 return "";
-            return getConcatenatedEdgeLabelBetweenNodes(parent, child.Parent) + parent.GetEdgeLabelForChild(child);
+            return getConcatenatedEdgeLabelBetweenNodes(parent, child.Parent) + child.Parent.GetEdgeLabelForChild(child);
         }
 
         private void calculateCompressData(FibTreeNode node, Dictionary<FibTreeNode, CompressData> compressData)
