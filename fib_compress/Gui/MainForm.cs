@@ -26,7 +26,7 @@ namespace fib_compress.Gui
         private FibTree mFibTreeOriginal;
         private FibTree mFibTreeNormalized;
         private FibTree mFibTreeCompressed;
-        private LookupStatisticsCollection mLookupStatisticsCollection;
+        private MultiLookupCollection mMultiLookupCollection;
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -44,7 +44,7 @@ namespace fib_compress.Gui
             mFibTreeOriginal = new FibTree();
             mFibTreeNormalized = new FibTree();
             mFibTreeCompressed = new FibTree();
-            mLookupStatisticsCollection = new LookupStatisticsCollection();
+            mMultiLookupCollection = new MultiLookupCollection();
             mFibTableOriginal.CollectionChanged += MFibTableOriginal_CollectionChanged;
             mFibTreeOriginal.TreeChanged += MFibTreeOriginal_TreeChanged;
             mFibTreeNormalized.TreeChanged += MFibTreeNormalized_TreeChanged;
@@ -52,7 +52,10 @@ namespace fib_compress.Gui
         }
 
         private void MFibTableOriginal_CollectionChanged()
-            => updateModel();
+        {
+            updateModel();
+            mMultiLookupCollection.DoLookups();
+        }
 
         private void MFibTreeOriginal_TreeChanged()
             => visualizeTree(mFibTreeOriginal, originalFibTree);
@@ -89,7 +92,7 @@ namespace fib_compress.Gui
         private CustomDataGridView<FibTreeLabel> _originalNextHopTable;
         private CustomDataGridView<FibTreeLabel> _normalizedNextHopTable;
         private CustomDataGridView<FibTreeLabel> _compressedNextHopTable;
-        private CustomDataGridView<LookupStatistics> _ipLookupStatisticsTable;
+        private CustomDataGridView<MultiLookup> _ipLookupStatisticsTable;
 
         protected DataGridViewCellStyle BOLD_TEXT_CELL_STYLE
         {
@@ -193,60 +196,66 @@ namespace fib_compress.Gui
         private void initIpLookupStatisticsTable()
         {
 
-            _ipLookupStatisticsTable = CreateTable<LookupStatistics>(ref ipLookupStatisticsTable, ipLookupStatisticsTableContainer);
+            _ipLookupStatisticsTable = CreateTable<MultiLookup>(ref ipLookupStatisticsTable, ipLookupStatisticsTableContainer);
 
-            CustomDataGridViewColumnDescriptorBuilder<LookupStatistics> builder;
+            CustomDataGridViewColumnDescriptorBuilder<MultiLookup> builder;
 
             // Column: prefix, IP format
-            builder = new CustomDataGridViewColumnDescriptorBuilder<LookupStatistics>(_ipLookupStatisticsTable);
+            builder = new CustomDataGridViewColumnDescriptorBuilder<MultiLookup>(_ipLookupStatisticsTable);
             builder.Type(DataGridViewColumnType.TextBox);
             builder.Header("IP");
             builder.Width(150);
             builder.UpdaterMethod((entry, cell) => { cell.Value = entry.IP; });
+            builder.AddChangeEvent(nameof(MultiLookup.IP));
             builder.BuildAndAdd();
 
             // Column: prefix, IP format
-            builder = new CustomDataGridViewColumnDescriptorBuilder<LookupStatistics>(_ipLookupStatisticsTable);
+            builder = new CustomDataGridViewColumnDescriptorBuilder<MultiLookup>(_ipLookupStatisticsTable);
             builder.Type(DataGridViewColumnType.TextBox);
             builder.Header("IP (binary)");
             builder.Width(300);
             builder.UpdaterMethod((entry, cell) => { cell.Value = IpConverter.IpToBinary(entry.IP, " "); });
+            builder.AddChangeEvent(nameof(MultiLookup.IP));
             builder.BuildAndAdd();
 
             // Column: next hop
-            builder = new CustomDataGridViewColumnDescriptorBuilder<LookupStatistics>(_ipLookupStatisticsTable);
+            builder = new CustomDataGridViewColumnDescriptorBuilder<MultiLookup>(_ipLookupStatisticsTable);
             builder.Type(DataGridViewColumnType.TextBox);
             builder.Header("Next hop");
             builder.Width(150);
             builder.UpdaterMethod((entry, cell) => { cell.Value = entry.NextHop ?? "-"; });
+            builder.AddChangeEvent(nameof(MultiLookup.NextHop));
             builder.BuildAndAdd();
 
             // Column: edges (original)
-            builder = new CustomDataGridViewColumnDescriptorBuilder<LookupStatistics>(_ipLookupStatisticsTable);
+            builder = new CustomDataGridViewColumnDescriptorBuilder<MultiLookup>(_ipLookupStatisticsTable);
             builder.Type(DataGridViewColumnType.TextBox);
             builder.Header("Edges (original)");
             builder.Width(120);
             builder.UpdaterMethod((entry, cell) => { cell.Value = entry.EdgesOriginal?.ToString() ?? "-"; });
+            builder.AddChangeEvent(nameof(MultiLookup.EdgesOriginal));
             builder.BuildAndAdd();
 
             // Column: edges (normalized)
-            builder = new CustomDataGridViewColumnDescriptorBuilder<LookupStatistics>(_ipLookupStatisticsTable);
+            builder = new CustomDataGridViewColumnDescriptorBuilder<MultiLookup>(_ipLookupStatisticsTable);
             builder.Type(DataGridViewColumnType.TextBox);
             builder.Header("Edges (normalized)");
             builder.Width(120);
             builder.UpdaterMethod((entry, cell) => { cell.Value = entry.EdgesNormalized?.ToString() ?? "-"; });
+            builder.AddChangeEvent(nameof(MultiLookup.EdgesNormalized)); 
             builder.BuildAndAdd();
 
             // Column: edges (original)
-            builder = new CustomDataGridViewColumnDescriptorBuilder<LookupStatistics>(_ipLookupStatisticsTable);
+            builder = new CustomDataGridViewColumnDescriptorBuilder<MultiLookup>(_ipLookupStatisticsTable);
             builder.Type(DataGridViewColumnType.TextBox);
             builder.Header("Edges (compressed)");
             builder.Width(120);
             builder.UpdaterMethod((entry, cell) => { cell.Value = entry.EdgesCompressed?.ToString() ?? "-"; });
+            builder.AddChangeEvent(nameof(MultiLookup.EdgesCompressed)); 
             builder.BuildAndAdd();
 
             // Bind database
-            _ipLookupStatisticsTable.BoundCollection = mLookupStatisticsCollection;
+            _ipLookupStatisticsTable.BoundCollection = mMultiLookupCollection;
 
         }
 
@@ -336,11 +345,8 @@ namespace fib_compress.Gui
                 try
                 {
                     string ip = dialog.IP;
-                    FibTree.Lookup lookupOriginal = mFibTreeOriginal.DoLookup(ip);
-                    FibTree.Lookup lookupNormalized = mFibTreeNormalized.DoLookup(ip);
-                    FibTree.Lookup lookupCompressed = mFibTreeCompressed.DoLookup(ip);
-                    LookupStatistics statEntry = new LookupStatistics(ip, lookupOriginal.NextHop?.NextHop, lookupOriginal.EdgeCount, lookupNormalized.EdgeCount, lookupCompressed.EdgeCount);
-                    mLookupStatisticsCollection.Add(statEntry);
+                    MultiLookup statEntry = new MultiLookup(ip, mFibTreeOriginal, mFibTreeNormalized, mFibTreeCompressed);
+                    mMultiLookupCollection.Add(statEntry);
                 }
                 catch (Exception ex)
                 {
@@ -351,10 +357,10 @@ namespace fib_compress.Gui
 
         private void clearIpLookupTableButton_Click(object sender, EventArgs e)
         {
-            mLookupStatisticsCollection.Clear();
+            mMultiLookupCollection.Clear();
         }
 
-        private class LookupStatistics
+        private class MultiLookup : Model.INotifyPropertyChanged
         {
 
             public string IP { get; private set; }
@@ -363,25 +369,46 @@ namespace fib_compress.Gui
             public int? EdgesNormalized { get; private set; }
             public int? EdgesCompressed { get; private set; }
 
-            public LookupStatistics(string ip, string nextHop, int? edgesOriginal, int? edgesNormalized, int? edgesCompressed)
+            private FibTree mFibTreeOriginal;
+            private FibTree mFibTreeNormalized;
+            private FibTree mFibTreeCompressed;
+
+            public MultiLookup(string ip, FibTree mFibTreeOriginal, FibTree mFibTreeNormalized, FibTree mFibTreeCompressed)
             {
                 IP = ip;
-                NextHop = nextHop;
-                EdgesOriginal = edgesOriginal;
-                EdgesNormalized = edgesNormalized;
-                EdgesCompressed = edgesCompressed;
+                this.mFibTreeOriginal = mFibTreeOriginal;
+                this.mFibTreeNormalized = mFibTreeNormalized;
+                this.mFibTreeCompressed = mFibTreeCompressed;
+                DoLookup();
+            }
+
+            public event PropertyChangedDelegate PropertyChanged;
+
+            public void DoLookup()
+            {
+                FibTree.Lookup lookupOriginal = mFibTreeOriginal.DoLookup(IP);
+                FibTree.Lookup lookupNormalized = mFibTreeNormalized.DoLookup(IP);
+                FibTree.Lookup lookupCompressed = mFibTreeCompressed.DoLookup(IP);
+                EdgesOriginal = lookupOriginal.EdgeCount;
+                EdgesNormalized = lookupNormalized.EdgeCount;
+                EdgesCompressed = lookupCompressed.EdgeCount;
+                NextHop = lookupOriginal.NextHop?.NextHop;
+                PropertyChanged?.Invoke(nameof(EdgesOriginal));
+                PropertyChanged?.Invoke(nameof(EdgesNormalized));
+                PropertyChanged?.Invoke(nameof(EdgesCompressed));
+                PropertyChanged?.Invoke(nameof(NextHop));
             }
 
         }
 
-        private class LookupStatisticsCollection : IObservableCollection<LookupStatistics>
+        private class MultiLookupCollection : IObservableCollection<MultiLookup>
         {
 
             public event CollectionChangedDelegate CollectionChanged;
 
-            private List<LookupStatistics> collection = new List<LookupStatistics>();
+            private List<MultiLookup> collection = new List<MultiLookup>();
 
-            public void Add(LookupStatistics entry)
+            public void Add(MultiLookup entry)
             {
                 collection.Add(entry);
                 CollectionChanged?.Invoke();
@@ -393,7 +420,10 @@ namespace fib_compress.Gui
                 CollectionChanged?.Invoke();
             }
 
-            public IEnumerator<LookupStatistics> GetEnumerator()
+            public void DoLookups()
+                => collection.ForEach(l => l.DoLookup());
+
+            public IEnumerator<MultiLookup> GetEnumerator()
                 => collection.GetEnumerator();
 
             IEnumerator IEnumerable.GetEnumerator()
