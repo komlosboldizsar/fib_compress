@@ -271,7 +271,7 @@ namespace fib_compress.Model
             private string ip;
             public FibTreeLabel NextHop { get; private set; }
             public List<FibTreeNode> Nodes { get; private set; } = new List<FibTreeNode>();
-            public int EdgeCount => Nodes.Count - 1;
+            public int? EdgeCount => (NextHop != null) ? (int?)(Nodes.Count - 1) : null;
 
             public Lookup(FibTree tree, string ip)
             {
