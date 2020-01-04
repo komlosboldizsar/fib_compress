@@ -351,15 +351,9 @@ namespace fib_compress.Gui
         {
             foreach (TreeNode node in treeviewNodeCollection) {
 
-                visualizeLookup(lookup, node.Nodes);
-
                 if (lookup == null)
-                {
                     node.BackColor = Color.White;
-                    return;
-                }
-
-                if (!lookup.Nodes.Contains(node.Tag))
+                else if (!lookup.Nodes.Contains(node.Tag))
                     node.BackColor = Color.White;
                 else if (lookup.SolutionNode == node.Tag)
                     node.BackColor = Color.LightGreen;
@@ -367,6 +361,8 @@ namespace fib_compress.Gui
                     node.BackColor = Color.LightPink;
                 else
                     node.BackColor = Color.LightGray;
+
+                visualizeLookup(lookup, node.Nodes);
 
             }
         }
