@@ -55,6 +55,7 @@ namespace fib_compress.Gui
         {
             updateModel();
             mMultiLookupCollection.DoLookups();
+            visualizeLookups();
         }
 
         private void MFibTreeOriginal_TreeChanged()
@@ -331,11 +332,19 @@ namespace fib_compress.Gui
                 addNodeWithChildren(child.Value, treeView, newNode, child.Key);
         }
 
+        private MultiLookup visualizedLookup = null;
+
         private void visualizeLookups(MultiLookup multiLookup)
         {
-            visualizeLookup(multiLookup?.LookupOriginal, originalFibTree.Nodes);
-            visualizeLookup(multiLookup?.LookupNormalized, normalizedFibTree.Nodes);
-            visualizeLookup(multiLookup?.LookupCompressed, compressedFibTree.Nodes);
+            visualizedLookup = multiLookup;
+            visualizeLookups();
+        }
+
+        private void visualizeLookups()
+        {
+            visualizeLookup(visualizedLookup?.LookupOriginal, originalFibTree.Nodes);
+            visualizeLookup(visualizedLookup?.LookupNormalized, normalizedFibTree.Nodes);
+            visualizeLookup(visualizedLookup?.LookupCompressed, compressedFibTree.Nodes);
         }
 
         private void visualizeLookup(FibTree.Lookup lookup, TreeNodeCollection treeviewNodeCollection)
