@@ -94,14 +94,10 @@ namespace fib_compress.Model
             if (node.Children.Count == 0)
                 return;
 
-            List<FibTreeLabel> usedLabels = new List<FibTreeLabel>();
             foreach (FibTreeNode child in node.Children.Values)
-            {
                 normalize_Reduce(child);
-                if (!usedLabels.Contains(child.Label))
-                    usedLabels.Add(child.Label);
-            }
 
+            List<FibTreeLabel> usedLabels = node.AllLabelsInSubtreeUnique();
             if (usedLabels.Count == 1)
             {
                 node.ClearChildren();

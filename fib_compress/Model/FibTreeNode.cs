@@ -93,6 +93,25 @@ namespace fib_compress.Model
             Children.Clear();
         }
 
+        public List<FibTreeLabel> AllLabelsInSubtree()
+        {
+            List<FibTreeLabel> labels = new List<FibTreeLabel>();
+            labels.Add(Label);
+            foreach (FibTreeNode child in Children.Values)
+                labels.AddRange(child.AllLabelsInSubtree());
+            return labels;
+        }
+
+        public List<FibTreeLabel> AllLabelsInSubtreeUnique()
+        {
+            List<FibTreeLabel> allLabels = AllLabelsInSubtree();
+            List<FibTreeLabel> allLabelsUnique = new List<FibTreeLabel>();
+            foreach (FibTreeLabel label in allLabels)
+                if (!allLabelsUnique.Contains(label))
+                    allLabelsUnique.Add(label);
+            return allLabelsUnique;
+        }
+
     }
 
 }
