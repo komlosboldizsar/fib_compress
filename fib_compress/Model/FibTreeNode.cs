@@ -42,6 +42,35 @@ namespace fib_compress.Model
             return null;
         }
 
+        public List<FibTreeNode> GetChildrenAtLevel(int level)
+        {
+            if (level == 0)
+                return new List<FibTreeNode>() { this };
+            List<FibTreeNode> childrenAtLevel = new List<FibTreeNode>();
+            foreach (FibTreeNode child in Children.Values)
+                childrenAtLevel.AddRange(child.GetChildrenAtLevel(level - 1));
+            return childrenAtLevel;
+        }
+
+        public int GetDepth()
+        {
+            int depth = 0;
+            foreach (FibTreeNode child in Children.Values)
+            {
+                int childDepth = child.GetDepth() + 1;
+                if (childDepth > depth)
+                    depth = childDepth;
+            }
+            return depth;
+        }
+
+        public string GetEdgeLabelForChild(FibTreeNode childNode)
+        {
+            foreach (KeyValuePair<string, FibTreeNode> childEntry in Children)
+                if (childEntry.Value == childNode)
+                    return childEntry.Key;
+            return null;
+        }
         public FibTreeNode AddChild(string edgeLabel, FibTreeLabel nodeLabel = null)
         {
             if (Children.ContainsKey(edgeLabel))

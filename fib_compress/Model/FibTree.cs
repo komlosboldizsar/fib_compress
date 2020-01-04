@@ -112,15 +112,90 @@ namespace fib_compress.Model
 
         public void CreateFromNormalizedFibTreeAndCompress(FibTree tree)
         {
-
-            // TODO: this just copies the tree
             Root = new FibTreeNode(null);
             Labels.Clear();
-
-            copyNodeAndChildrens(Root, tree.Root);
-
+            Dictionary<FibTreeNode, CompressData> compressData = new Dictionary<FibTreeNode, CompressData>();
+            calculateCompressData(tree.Root, compressData);
+            addChildrenWithStride(Root, tree.Root, compressData);
             TreeChanged?.Invoke();
+        }
 
+        private void addChildrenWithStride(FibTreeNode to, FibTreeNode from, Dictionary<FibTreeNode, CompressData> compressData)
+        {
+
+            if (from.Label != null)
+            {
+                FibTreeLabel label = Labels.GetLabelByNextHop(from.Label.NextHop);
+                if (label == null)
+                    label = Labels.AddLabelForNextHop(from.Label.NextHop);
+                to.Label = label;
+            }
+
+            if (from.Children.Count == 0)
+                return;
+
+            List<FibTreeNode> childrenToAdd = from.GetChildrenAtLevel(compressData[from].OptimalStride);
+            foreach (FibTreeNode childToAdd in childrenToAdd)
+            {
+                FibTreeNode newNode = to.AddChild(getConcatenatedEdgeLabelBetweenNodes(from, childToAdd));
+                addChildrenWithStride(newNode, childToAdd, compressData);
+            }
+
+        }
+
+        private string getConcatenatedEdgeLabelBetweenNodes(FibTreeNode parent, FibTreeNode child)
+        {
+            if (parent == child)
+                return "";
+            return getConcatenatedEdgeLabelBetweenNodes(parent, child.Parent) + parent.GetEdgeLabelForChild(child);
+        }
+
+        private void calculateCompressData(FibTreeNode node, Dictionary<FibTreeNode, CompressData> compressData)
+        {
+
+            if (node.Children.Count == 0)
+            {
+                compressData.Add(node, new CompressData()
+                {
+                    Node = node,
+                    Depth = 0,
+                    OptimalStride = 0,
+                    PointerCount = 0
+                });
+            }
+            else
+            {
+                foreach (FibTreeNode child in node.Children.Values)
+                    calculateCompressData(child, compressData);
+                CompressData nodeCompressData = new CompressData()
+                {
+                    Node = node,
+                    Depth = node.GetDepth(),
+                    OptimalStride = -1,
+                    PointerCount = -1
+                };
+                for (int k = 1; k <= nodeCompressData.Depth; k++)
+                {
+                    int pointerCount = (int)Math.Pow(2, k);
+                    foreach (FibTreeNode child in node.GetChildrenAtLevel(k))
+                        pointerCount += compressData[child].PointerCount;
+                    if ((nodeCompressData.PointerCount == -1) || (pointerCount < nodeCompressData.PointerCount))
+                    {
+                        nodeCompressData.OptimalStride = k;
+                        nodeCompressData.PointerCount = pointerCount;
+                    }
+                }
+                compressData.Add(node, nodeCompressData);
+            }
+
+        }
+
+        private class CompressData
+        {
+            public FibTreeNode Node { get; set; }
+            public int Depth { get; set; }
+            public int OptimalStride { get; set; }
+            public int PointerCount { get; set; }
         }
 
         private void copyNodeAndChildrens(FibTreeNode to, FibTreeNode from)
