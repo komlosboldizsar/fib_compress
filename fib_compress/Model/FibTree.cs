@@ -45,7 +45,69 @@ namespace fib_compress.Model
 
         public void CreateFromFibTreeAndNormalize(FibTree tree)
         {
-            throw new NotImplementedException();
+            Root = new FibTreeNode(null);
+            Labels.Clear();
+            copyNodeAndChildrens(Root, tree.Root);
+            normalize();
+            TreeChanged?.Invoke();
+        }
+
+        private void normalize()
+        {
+            normalize_CreateLeaves(Root, null);
+            normalize_RemoveInteriorLabels(Root);
+            normalize_Reduce(Root);
+        }
+
+        private void normalize_CreateLeaves(FibTreeNode node, FibTreeLabel nearestLabel)
+        {
+
+            if (node.Children.Count == 0)
+                return;
+            
+            if (node.Label != null)
+                nearestLabel = node.Label;
+
+            if (node.Children.Count == 1)
+            {
+                string notExistingEdgeLabel = string.Format("{0}", (int)'1' - (int)node.Children.ToList()[0].Key[0]);
+                node.AddChild(notExistingEdgeLabel, nearestLabel);    
+            }
+
+            normalize_CreateLeaves(node.GetChild(0), nearestLabel);
+            normalize_CreateLeaves(node.GetChild(1), nearestLabel);
+
+        }
+
+        private void normalize_RemoveInteriorLabels(FibTreeNode node)
+        {
+            if (node.Children.Count == 0)
+                return;
+            foreach (FibTreeNode child in node.Children.Values)
+                normalize_RemoveInteriorLabels(child);
+            node.Label = null;
+        }
+
+        private void normalize_Reduce(FibTreeNode node)
+        {
+
+            if (node.Children.Count == 0)
+                return;
+
+            List<FibTreeLabel> usedLabels = new List<FibTreeLabel>();
+            foreach (FibTreeNode child in node.Children.Values)
+            {
+                normalize_Reduce(child);
+                if (!usedLabels.Contains(child.Label))
+                    usedLabels.Add(child.Label);
+            }
+
+            if (usedLabels.Count == 1)
+            {
+                node.ClearChildren();
+                node.Label = usedLabels[0];
+            }
+
         }
 
         public void CreateFromNormalizedFibTreeAndCompress(FibTree tree)
