@@ -41,8 +41,6 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.clearFibButton = new System.Windows.Forms.Button();
             this.addFibEntryButton = new System.Windows.Forms.Button();
-            this.originalFibTree = new System.Windows.Forms.TreeView();
-            this.compressedFibTree = new System.Windows.Forms.TreeView();
             this.compressedFibTableContainer = new System.Windows.Forms.Panel();
             this.compressedFibTable = new System.Windows.Forms.DataGridView();
             this.originalNextHopTableContainer = new System.Windows.Forms.Panel();
@@ -53,7 +51,6 @@
             this.normalizedFibTable = new System.Windows.Forms.DataGridView();
             this.normalizedNextHopTableContainer = new System.Windows.Forms.Panel();
             this.normalizedNextHopTable = new System.Windows.Forms.DataGridView();
-            this.normalizedFibTree = new System.Windows.Forms.TreeView();
             this.ipLookupContainer = new System.Windows.Forms.Panel();
             this.ipLookupStatisticsTableContainer = new System.Windows.Forms.Panel();
             this.ipLookupStatisticsTable = new System.Windows.Forms.DataGridView();
@@ -61,17 +58,23 @@
             this.clearVisualizationButton = new System.Windows.Forms.Button();
             this.clearIpLookupTableButton = new System.Windows.Forms.Button();
             this.doLookupButton = new System.Windows.Forms.Button();
-            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.originalFibTreeContainer = new System.Windows.Forms.Panel();
-            this.normalizedFibTreeContainer = new System.Windows.Forms.Panel();
-            this.compressedFibTreeContainer = new System.Windows.Forms.Panel();
+            this.originalFibTree = new System.Windows.Forms.TreeView();
             this.originalFibTreeInfoPanel = new System.Windows.Forms.Panel();
             this.originalFibTreeInfoLabel = new System.Windows.Forms.Label();
+            this.normalizedFibTreeContainer = new System.Windows.Forms.Panel();
+            this.normalizedFibTree = new System.Windows.Forms.TreeView();
             this.normalizedFibTreeInfoPanel = new System.Windows.Forms.Panel();
             this.normalizedFibTreeInfoLabel = new System.Windows.Forms.Label();
+            this.compressedFibTreeContainer = new System.Windows.Forms.Panel();
+            this.compressedFibTree = new System.Windows.Forms.TreeView();
             this.compressedFibTreeInfoPanel = new System.Windows.Forms.Panel();
             this.compressedFibTreeInfoLabel = new System.Windows.Forms.Label();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.originalRowLabel = new System.Windows.Forms.Label();
+            this.normalizedRowLabel = new System.Windows.Forms.Label();
+            this.compressedRowLabel = new System.Windows.Forms.Label();
             this.header.SuspendLayout();
             this.tableLayout.SuspendLayout();
             this.originalFibTableContainerPanel.SuspendLayout();
@@ -93,10 +96,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.ipLookupStatisticsTable)).BeginInit();
             this.ipLookupButtonsPanel.SuspendLayout();
             this.originalFibTreeContainer.SuspendLayout();
-            this.normalizedFibTreeContainer.SuspendLayout();
-            this.compressedFibTreeContainer.SuspendLayout();
             this.originalFibTreeInfoPanel.SuspendLayout();
+            this.normalizedFibTreeContainer.SuspendLayout();
             this.normalizedFibTreeInfoPanel.SuspendLayout();
+            this.compressedFibTreeContainer.SuspendLayout();
             this.compressedFibTreeInfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -138,20 +141,24 @@
             // 
             // tableLayout
             // 
-            this.tableLayout.ColumnCount = 3;
-            this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayout.Controls.Add(this.originalFibTableContainerPanel, 0, 0);
-            this.tableLayout.Controls.Add(this.compressedFibTableContainer, 0, 2);
-            this.tableLayout.Controls.Add(this.originalNextHopTableContainer, 2, 0);
-            this.tableLayout.Controls.Add(this.compressedNextHopTableContainer, 2, 2);
-            this.tableLayout.Controls.Add(this.normalizedFibTableContainer, 0, 1);
-            this.tableLayout.Controls.Add(this.normalizedNextHopTableContainer, 2, 1);
+            this.tableLayout.ColumnCount = 4;
+            this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33444F));
+            this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33444F));
+            this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33111F));
+            this.tableLayout.Controls.Add(this.compressedRowLabel, 0, 2);
+            this.tableLayout.Controls.Add(this.normalizedRowLabel, 0, 1);
+            this.tableLayout.Controls.Add(this.originalFibTableContainerPanel, 1, 0);
+            this.tableLayout.Controls.Add(this.compressedFibTableContainer, 1, 2);
+            this.tableLayout.Controls.Add(this.originalNextHopTableContainer, 3, 0);
+            this.tableLayout.Controls.Add(this.compressedNextHopTableContainer, 3, 2);
+            this.tableLayout.Controls.Add(this.normalizedFibTableContainer, 1, 1);
+            this.tableLayout.Controls.Add(this.normalizedNextHopTableContainer, 3, 1);
             this.tableLayout.Controls.Add(this.ipLookupContainer, 0, 3);
-            this.tableLayout.Controls.Add(this.originalFibTreeContainer, 1, 0);
-            this.tableLayout.Controls.Add(this.normalizedFibTreeContainer, 1, 1);
-            this.tableLayout.Controls.Add(this.compressedFibTreeContainer, 1, 2);
+            this.tableLayout.Controls.Add(this.originalFibTreeContainer, 2, 0);
+            this.tableLayout.Controls.Add(this.normalizedFibTreeContainer, 2, 1);
+            this.tableLayout.Controls.Add(this.compressedFibTreeContainer, 2, 2);
+            this.tableLayout.Controls.Add(this.originalRowLabel, 0, 0);
             this.tableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayout.Location = new System.Drawing.Point(0, 71);
             this.tableLayout.Name = "tableLayout";
@@ -168,9 +175,9 @@
             this.originalFibTableContainerPanel.Controls.Add(this.originalFibTableContainer);
             this.originalFibTableContainerPanel.Controls.Add(this.originalFibButtonsPanel);
             this.originalFibTableContainerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.originalFibTableContainerPanel.Location = new System.Drawing.Point(3, 3);
+            this.originalFibTableContainerPanel.Location = new System.Drawing.Point(37, 3);
             this.originalFibTableContainerPanel.Name = "originalFibTableContainerPanel";
-            this.originalFibTableContainerPanel.Size = new System.Drawing.Size(521, 214);
+            this.originalFibTableContainerPanel.Size = new System.Drawing.Size(510, 214);
             this.originalFibTableContainerPanel.TabIndex = 0;
             // 
             // originalFibTableContainer
@@ -179,7 +186,7 @@
             this.originalFibTableContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.originalFibTableContainer.Location = new System.Drawing.Point(0, 0);
             this.originalFibTableContainer.Name = "originalFibTableContainer";
-            this.originalFibTableContainer.Size = new System.Drawing.Size(521, 166);
+            this.originalFibTableContainer.Size = new System.Drawing.Size(510, 166);
             this.originalFibTableContainer.TabIndex = 2;
             // 
             // originalFibTable
@@ -190,7 +197,7 @@
             this.originalFibTable.Name = "originalFibTable";
             this.originalFibTable.RowHeadersWidth = 51;
             this.originalFibTable.RowTemplate.Height = 24;
-            this.originalFibTable.Size = new System.Drawing.Size(521, 166);
+            this.originalFibTable.Size = new System.Drawing.Size(510, 166);
             this.originalFibTable.TabIndex = 1;
             // 
             // originalFibButtonsPanel
@@ -205,7 +212,7 @@
             this.originalFibButtonsPanel.Location = new System.Drawing.Point(0, 166);
             this.originalFibButtonsPanel.Name = "originalFibButtonsPanel";
             this.originalFibButtonsPanel.Padding = new System.Windows.Forms.Padding(5);
-            this.originalFibButtonsPanel.Size = new System.Drawing.Size(521, 48);
+            this.originalFibButtonsPanel.Size = new System.Drawing.Size(510, 48);
             this.originalFibButtonsPanel.TabIndex = 0;
             // 
             // sortFibButton
@@ -221,7 +228,7 @@
             // loadButton
             // 
             this.loadButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.loadButton.Location = new System.Drawing.Point(373, 8);
+            this.loadButton.Location = new System.Drawing.Point(362, 8);
             this.loadButton.Name = "loadButton";
             this.loadButton.Size = new System.Drawing.Size(67, 32);
             this.loadButton.TabIndex = 3;
@@ -232,7 +239,7 @@
             // saveButton
             // 
             this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveButton.Location = new System.Drawing.Point(446, 8);
+            this.saveButton.Location = new System.Drawing.Point(435, 8);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(67, 32);
             this.saveButton.TabIndex = 2;
@@ -260,29 +267,13 @@
             this.addFibEntryButton.UseVisualStyleBackColor = true;
             this.addFibEntryButton.Click += new System.EventHandler(this.addFibEntryButton_Click);
             // 
-            // originalFibTree
-            // 
-            this.originalFibTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.originalFibTree.Location = new System.Drawing.Point(0, 0);
-            this.originalFibTree.Name = "originalFibTree";
-            this.originalFibTree.Size = new System.Drawing.Size(521, 181);
-            this.originalFibTree.TabIndex = 2;
-            // 
-            // compressedFibTree
-            // 
-            this.compressedFibTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.compressedFibTree.Location = new System.Drawing.Point(0, 0);
-            this.compressedFibTree.Name = "compressedFibTree";
-            this.compressedFibTree.Size = new System.Drawing.Size(521, 181);
-            this.compressedFibTree.TabIndex = 3;
-            // 
             // compressedFibTableContainer
             // 
             this.compressedFibTableContainer.Controls.Add(this.compressedFibTable);
             this.compressedFibTableContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.compressedFibTableContainer.Location = new System.Drawing.Point(3, 443);
+            this.compressedFibTableContainer.Location = new System.Drawing.Point(37, 443);
             this.compressedFibTableContainer.Name = "compressedFibTableContainer";
-            this.compressedFibTableContainer.Size = new System.Drawing.Size(521, 214);
+            this.compressedFibTableContainer.Size = new System.Drawing.Size(510, 214);
             this.compressedFibTableContainer.TabIndex = 6;
             // 
             // compressedFibTable
@@ -293,16 +284,16 @@
             this.compressedFibTable.Name = "compressedFibTable";
             this.compressedFibTable.RowHeadersWidth = 51;
             this.compressedFibTable.RowTemplate.Height = 24;
-            this.compressedFibTable.Size = new System.Drawing.Size(521, 214);
+            this.compressedFibTable.Size = new System.Drawing.Size(510, 214);
             this.compressedFibTable.TabIndex = 0;
             // 
             // originalNextHopTableContainer
             // 
             this.originalNextHopTableContainer.Controls.Add(this.originalNextHopTable);
             this.originalNextHopTableContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.originalNextHopTableContainer.Location = new System.Drawing.Point(1057, 3);
+            this.originalNextHopTableContainer.Location = new System.Drawing.Point(1069, 3);
             this.originalNextHopTableContainer.Name = "originalNextHopTableContainer";
-            this.originalNextHopTableContainer.Size = new System.Drawing.Size(522, 214);
+            this.originalNextHopTableContainer.Size = new System.Drawing.Size(510, 214);
             this.originalNextHopTableContainer.TabIndex = 7;
             // 
             // originalNextHopTable
@@ -313,16 +304,16 @@
             this.originalNextHopTable.Name = "originalNextHopTable";
             this.originalNextHopTable.RowHeadersWidth = 51;
             this.originalNextHopTable.RowTemplate.Height = 24;
-            this.originalNextHopTable.Size = new System.Drawing.Size(522, 214);
+            this.originalNextHopTable.Size = new System.Drawing.Size(510, 214);
             this.originalNextHopTable.TabIndex = 0;
             // 
             // compressedNextHopTableContainer
             // 
             this.compressedNextHopTableContainer.Controls.Add(this.compressedNextHopTable);
             this.compressedNextHopTableContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.compressedNextHopTableContainer.Location = new System.Drawing.Point(1057, 443);
+            this.compressedNextHopTableContainer.Location = new System.Drawing.Point(1069, 443);
             this.compressedNextHopTableContainer.Name = "compressedNextHopTableContainer";
-            this.compressedNextHopTableContainer.Size = new System.Drawing.Size(522, 214);
+            this.compressedNextHopTableContainer.Size = new System.Drawing.Size(510, 214);
             this.compressedNextHopTableContainer.TabIndex = 8;
             // 
             // compressedNextHopTable
@@ -333,16 +324,16 @@
             this.compressedNextHopTable.Name = "compressedNextHopTable";
             this.compressedNextHopTable.RowHeadersWidth = 51;
             this.compressedNextHopTable.RowTemplate.Height = 24;
-            this.compressedNextHopTable.Size = new System.Drawing.Size(522, 214);
+            this.compressedNextHopTable.Size = new System.Drawing.Size(510, 214);
             this.compressedNextHopTable.TabIndex = 0;
             // 
             // normalizedFibTableContainer
             // 
             this.normalizedFibTableContainer.Controls.Add(this.normalizedFibTable);
             this.normalizedFibTableContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.normalizedFibTableContainer.Location = new System.Drawing.Point(3, 223);
+            this.normalizedFibTableContainer.Location = new System.Drawing.Point(37, 223);
             this.normalizedFibTableContainer.Name = "normalizedFibTableContainer";
-            this.normalizedFibTableContainer.Size = new System.Drawing.Size(521, 214);
+            this.normalizedFibTableContainer.Size = new System.Drawing.Size(510, 214);
             this.normalizedFibTableContainer.TabIndex = 9;
             // 
             // normalizedFibTable
@@ -353,16 +344,16 @@
             this.normalizedFibTable.Name = "normalizedFibTable";
             this.normalizedFibTable.RowHeadersWidth = 51;
             this.normalizedFibTable.RowTemplate.Height = 24;
-            this.normalizedFibTable.Size = new System.Drawing.Size(521, 214);
+            this.normalizedFibTable.Size = new System.Drawing.Size(510, 214);
             this.normalizedFibTable.TabIndex = 0;
             // 
             // normalizedNextHopTableContainer
             // 
             this.normalizedNextHopTableContainer.Controls.Add(this.normalizedNextHopTable);
             this.normalizedNextHopTableContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.normalizedNextHopTableContainer.Location = new System.Drawing.Point(1057, 223);
+            this.normalizedNextHopTableContainer.Location = new System.Drawing.Point(1069, 223);
             this.normalizedNextHopTableContainer.Name = "normalizedNextHopTableContainer";
-            this.normalizedNextHopTableContainer.Size = new System.Drawing.Size(522, 214);
+            this.normalizedNextHopTableContainer.Size = new System.Drawing.Size(510, 214);
             this.normalizedNextHopTableContainer.TabIndex = 11;
             // 
             // normalizedNextHopTable
@@ -373,20 +364,12 @@
             this.normalizedNextHopTable.Name = "normalizedNextHopTable";
             this.normalizedNextHopTable.RowHeadersWidth = 51;
             this.normalizedNextHopTable.RowTemplate.Height = 24;
-            this.normalizedNextHopTable.Size = new System.Drawing.Size(522, 214);
+            this.normalizedNextHopTable.Size = new System.Drawing.Size(510, 214);
             this.normalizedNextHopTable.TabIndex = 0;
-            // 
-            // normalizedFibTree
-            // 
-            this.normalizedFibTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.normalizedFibTree.Location = new System.Drawing.Point(0, 0);
-            this.normalizedFibTree.Name = "normalizedFibTree";
-            this.normalizedFibTree.Size = new System.Drawing.Size(521, 181);
-            this.normalizedFibTree.TabIndex = 12;
             // 
             // ipLookupContainer
             // 
-            this.tableLayout.SetColumnSpan(this.ipLookupContainer, 3);
+            this.tableLayout.SetColumnSpan(this.ipLookupContainer, 4);
             this.ipLookupContainer.Controls.Add(this.ipLookupStatisticsTableContainer);
             this.ipLookupContainer.Controls.Add(this.ipLookupButtonsPanel);
             this.ipLookupContainer.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -461,45 +444,23 @@
             this.doLookupButton.UseVisualStyleBackColor = true;
             this.doLookupButton.Click += new System.EventHandler(this.doLookupButton_Click);
             // 
-            // openFileDialog
-            // 
-            this.openFileDialog.Filter = "CSV files|*.csv|All files|*.*";
-            this.openFileDialog.Title = "Open FIB table";
-            // 
-            // saveFileDialog
-            // 
-            this.saveFileDialog.Filter = "CSV files|*.csv|All files|*.*";
-            this.saveFileDialog.Title = "Save FIB table";
-            // 
             // originalFibTreeContainer
             // 
             this.originalFibTreeContainer.Controls.Add(this.originalFibTree);
             this.originalFibTreeContainer.Controls.Add(this.originalFibTreeInfoPanel);
             this.originalFibTreeContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.originalFibTreeContainer.Location = new System.Drawing.Point(530, 3);
+            this.originalFibTreeContainer.Location = new System.Drawing.Point(553, 3);
             this.originalFibTreeContainer.Name = "originalFibTreeContainer";
-            this.originalFibTreeContainer.Size = new System.Drawing.Size(521, 214);
+            this.originalFibTreeContainer.Size = new System.Drawing.Size(510, 214);
             this.originalFibTreeContainer.TabIndex = 14;
             // 
-            // normalizedFibTreeContainer
+            // originalFibTree
             // 
-            this.normalizedFibTreeContainer.Controls.Add(this.normalizedFibTree);
-            this.normalizedFibTreeContainer.Controls.Add(this.normalizedFibTreeInfoPanel);
-            this.normalizedFibTreeContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.normalizedFibTreeContainer.Location = new System.Drawing.Point(530, 223);
-            this.normalizedFibTreeContainer.Name = "normalizedFibTreeContainer";
-            this.normalizedFibTreeContainer.Size = new System.Drawing.Size(521, 214);
-            this.normalizedFibTreeContainer.TabIndex = 15;
-            // 
-            // compressedFibTreeContainer
-            // 
-            this.compressedFibTreeContainer.Controls.Add(this.compressedFibTree);
-            this.compressedFibTreeContainer.Controls.Add(this.compressedFibTreeInfoPanel);
-            this.compressedFibTreeContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.compressedFibTreeContainer.Location = new System.Drawing.Point(530, 443);
-            this.compressedFibTreeContainer.Name = "compressedFibTreeContainer";
-            this.compressedFibTreeContainer.Size = new System.Drawing.Size(521, 214);
-            this.compressedFibTreeContainer.TabIndex = 16;
+            this.originalFibTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.originalFibTree.Location = new System.Drawing.Point(0, 0);
+            this.originalFibTree.Name = "originalFibTree";
+            this.originalFibTree.Size = new System.Drawing.Size(510, 181);
+            this.originalFibTree.TabIndex = 2;
             // 
             // originalFibTreeInfoPanel
             // 
@@ -510,7 +471,7 @@
             this.originalFibTreeInfoPanel.Location = new System.Drawing.Point(0, 181);
             this.originalFibTreeInfoPanel.Name = "originalFibTreeInfoPanel";
             this.originalFibTreeInfoPanel.Padding = new System.Windows.Forms.Padding(5, 8, 5, 8);
-            this.originalFibTreeInfoPanel.Size = new System.Drawing.Size(521, 33);
+            this.originalFibTreeInfoPanel.Size = new System.Drawing.Size(510, 33);
             this.originalFibTreeInfoPanel.TabIndex = 3;
             // 
             // originalFibTreeInfoLabel
@@ -522,6 +483,24 @@
             this.originalFibTreeInfoLabel.TabIndex = 0;
             this.originalFibTreeInfoLabel.Text = "(tree info)";
             // 
+            // normalizedFibTreeContainer
+            // 
+            this.normalizedFibTreeContainer.Controls.Add(this.normalizedFibTree);
+            this.normalizedFibTreeContainer.Controls.Add(this.normalizedFibTreeInfoPanel);
+            this.normalizedFibTreeContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.normalizedFibTreeContainer.Location = new System.Drawing.Point(553, 223);
+            this.normalizedFibTreeContainer.Name = "normalizedFibTreeContainer";
+            this.normalizedFibTreeContainer.Size = new System.Drawing.Size(510, 214);
+            this.normalizedFibTreeContainer.TabIndex = 15;
+            // 
+            // normalizedFibTree
+            // 
+            this.normalizedFibTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.normalizedFibTree.Location = new System.Drawing.Point(0, 0);
+            this.normalizedFibTree.Name = "normalizedFibTree";
+            this.normalizedFibTree.Size = new System.Drawing.Size(510, 181);
+            this.normalizedFibTree.TabIndex = 12;
+            // 
             // normalizedFibTreeInfoPanel
             // 
             this.normalizedFibTreeInfoPanel.AutoSize = true;
@@ -531,7 +510,7 @@
             this.normalizedFibTreeInfoPanel.Location = new System.Drawing.Point(0, 181);
             this.normalizedFibTreeInfoPanel.Name = "normalizedFibTreeInfoPanel";
             this.normalizedFibTreeInfoPanel.Padding = new System.Windows.Forms.Padding(5, 8, 5, 8);
-            this.normalizedFibTreeInfoPanel.Size = new System.Drawing.Size(521, 33);
+            this.normalizedFibTreeInfoPanel.Size = new System.Drawing.Size(510, 33);
             this.normalizedFibTreeInfoPanel.TabIndex = 13;
             // 
             // normalizedFibTreeInfoLabel
@@ -543,6 +522,24 @@
             this.normalizedFibTreeInfoLabel.TabIndex = 0;
             this.normalizedFibTreeInfoLabel.Text = "(tree info)";
             // 
+            // compressedFibTreeContainer
+            // 
+            this.compressedFibTreeContainer.Controls.Add(this.compressedFibTree);
+            this.compressedFibTreeContainer.Controls.Add(this.compressedFibTreeInfoPanel);
+            this.compressedFibTreeContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.compressedFibTreeContainer.Location = new System.Drawing.Point(553, 443);
+            this.compressedFibTreeContainer.Name = "compressedFibTreeContainer";
+            this.compressedFibTreeContainer.Size = new System.Drawing.Size(510, 214);
+            this.compressedFibTreeContainer.TabIndex = 16;
+            // 
+            // compressedFibTree
+            // 
+            this.compressedFibTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.compressedFibTree.Location = new System.Drawing.Point(0, 0);
+            this.compressedFibTree.Name = "compressedFibTree";
+            this.compressedFibTree.Size = new System.Drawing.Size(510, 181);
+            this.compressedFibTree.TabIndex = 3;
+            // 
             // compressedFibTreeInfoPanel
             // 
             this.compressedFibTreeInfoPanel.AutoSize = true;
@@ -552,7 +549,7 @@
             this.compressedFibTreeInfoPanel.Location = new System.Drawing.Point(0, 181);
             this.compressedFibTreeInfoPanel.Name = "compressedFibTreeInfoPanel";
             this.compressedFibTreeInfoPanel.Padding = new System.Windows.Forms.Padding(5, 8, 5, 8);
-            this.compressedFibTreeInfoPanel.Size = new System.Drawing.Size(521, 33);
+            this.compressedFibTreeInfoPanel.Size = new System.Drawing.Size(510, 33);
             this.compressedFibTreeInfoPanel.TabIndex = 4;
             // 
             // compressedFibTreeInfoLabel
@@ -563,6 +560,61 @@
             this.compressedFibTreeInfoLabel.Size = new System.Drawing.Size(70, 17);
             this.compressedFibTreeInfoLabel.TabIndex = 0;
             this.compressedFibTreeInfoLabel.Text = "(tree info)";
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.Filter = "CSV files|*.csv|All files|*.*";
+            this.openFileDialog.Title = "Open FIB table";
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.Filter = "CSV files|*.csv|All files|*.*";
+            this.saveFileDialog.Title = "Save FIB table";
+            // 
+            // originalRowLabel
+            // 
+            this.originalRowLabel.AutoSize = true;
+            this.originalRowLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.originalRowLabel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.originalRowLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.originalRowLabel.ForeColor = System.Drawing.Color.Navy;
+            this.originalRowLabel.Location = new System.Drawing.Point(3, 0);
+            this.originalRowLabel.Name = "originalRowLabel";
+            this.originalRowLabel.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.originalRowLabel.Size = new System.Drawing.Size(28, 220);
+            this.originalRowLabel.TabIndex = 17;
+            this.originalRowLabel.Text = "O\r\nR\r\nI\r\nG\r\nI\r\nN\r\nA\r\nL";
+            this.originalRowLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // normalizedRowLabel
+            // 
+            this.normalizedRowLabel.AutoSize = true;
+            this.normalizedRowLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.normalizedRowLabel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.normalizedRowLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.normalizedRowLabel.ForeColor = System.Drawing.Color.Navy;
+            this.normalizedRowLabel.Location = new System.Drawing.Point(3, 220);
+            this.normalizedRowLabel.Name = "normalizedRowLabel";
+            this.normalizedRowLabel.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.normalizedRowLabel.Size = new System.Drawing.Size(28, 220);
+            this.normalizedRowLabel.TabIndex = 18;
+            this.normalizedRowLabel.Text = "N\r\nO\r\nR\r\nM\r\nA\r\nL\r\nI\r\nZ\r\nE\r\nD";
+            this.normalizedRowLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // compressedRowLabel
+            // 
+            this.compressedRowLabel.AutoSize = true;
+            this.compressedRowLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.compressedRowLabel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.compressedRowLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.compressedRowLabel.ForeColor = System.Drawing.Color.Navy;
+            this.compressedRowLabel.Location = new System.Drawing.Point(3, 440);
+            this.compressedRowLabel.Name = "compressedRowLabel";
+            this.compressedRowLabel.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.compressedRowLabel.Size = new System.Drawing.Size(28, 220);
+            this.compressedRowLabel.TabIndex = 19;
+            this.compressedRowLabel.Text = "C\r\nO\r\nM\r\nP\r\nR\r\nE\r\nS\r\nS\r\nE\r\nD";
+            this.compressedRowLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MainForm
             // 
@@ -578,6 +630,7 @@
             this.header.ResumeLayout(false);
             this.header.PerformLayout();
             this.tableLayout.ResumeLayout(false);
+            this.tableLayout.PerformLayout();
             this.originalFibTableContainerPanel.ResumeLayout(false);
             this.originalFibTableContainerPanel.PerformLayout();
             this.originalFibTableContainer.ResumeLayout(false);
@@ -600,14 +653,14 @@
             this.ipLookupButtonsPanel.ResumeLayout(false);
             this.originalFibTreeContainer.ResumeLayout(false);
             this.originalFibTreeContainer.PerformLayout();
-            this.normalizedFibTreeContainer.ResumeLayout(false);
-            this.normalizedFibTreeContainer.PerformLayout();
-            this.compressedFibTreeContainer.ResumeLayout(false);
-            this.compressedFibTreeContainer.PerformLayout();
             this.originalFibTreeInfoPanel.ResumeLayout(false);
             this.originalFibTreeInfoPanel.PerformLayout();
+            this.normalizedFibTreeContainer.ResumeLayout(false);
+            this.normalizedFibTreeContainer.PerformLayout();
             this.normalizedFibTreeInfoPanel.ResumeLayout(false);
             this.normalizedFibTreeInfoPanel.PerformLayout();
+            this.compressedFibTreeContainer.ResumeLayout(false);
+            this.compressedFibTreeContainer.PerformLayout();
             this.compressedFibTreeInfoPanel.ResumeLayout(false);
             this.compressedFibTreeInfoPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -661,6 +714,9 @@
         private System.Windows.Forms.Label normalizedFibTreeInfoLabel;
         private System.Windows.Forms.Panel compressedFibTreeInfoPanel;
         private System.Windows.Forms.Label compressedFibTreeInfoLabel;
+        private System.Windows.Forms.Label originalRowLabel;
+        private System.Windows.Forms.Label compressedRowLabel;
+        private System.Windows.Forms.Label normalizedRowLabel;
     }
 }
 
